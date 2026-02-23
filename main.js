@@ -7,7 +7,6 @@
 //- 
 
 const lang = "en"
-var upgraded = false
 
 const statTypes = [
 	"str",
@@ -71,27 +70,53 @@ async function getStatName(shortName) {
 	console.error("Couldn't index stat called: " + shortName)
 }
 
-async function makeStatsElement(skillName) {
-	const skill = data.passives[skillName]
-	const collar = skill["class"]
-	var specs
-	if (collar == "Disorder") {
-		specs = skill
-	} else if (upgraded) {
-		specs = skill[2]
-	} else {
-		specs = skill[1]
+
+class Skill {
+	constructor(skillId, tier) {
+		this.id = skillId
+		this.data = data.passives[this.id];
+		this.tier = tier ?? 1;
+
+		this.maxTier = 1
+		while (this.data[this.maxTier + 1]) {
+			this.maxTier++
+		}
+		if (this.tier > this.maxTier)
+			this.tier = this.maxTier
+
 	}
-	var stats = specs.stats
+
+	get(key, tier) {
+		tier = tier ?? this.tier
+		var value;
+		for (let i = tier; i > 0; i--) {
+			if (this.data[i]) {
+				value = this.data[i][key]
+				if (value)
+					return value
+			}
+		}
+		return this.data[key]
+	}
+
+	getIcon() {
+		let icon = this.get("icon")
+		return icon ?? this.id
+	}
+
+}
+
+async function makeStatsElement(skill) {
+	const stats = skill.get("stats")
+	const shield = skill.get("shield")
 
 
 	const div = document.createElement("div");
-	div.className = "sidebar-stats";
-	if (specs.shield) {
-		console.log("Hi!")
+	div.className = "sidebar-element-stats";
+	if (shield) {
 		let span = document.createElement("span")
 		span.style = "white-space: nowrap"
-		span.appendChild(document.createTextNode("+" + specs.shield + " "));
+		span.appendChild(document.createTextNode("+" + shield + " "));
 		const img = document.createElement("img")
 		img.title = "Shield"
 		img.className = "mewbox-icon"
@@ -127,121 +152,151 @@ async function makeStatsElement(skillName) {
 
 }
 
-async function makeUpgradeToggle() {
-	const toggle = document.createElement("div");
-	toggle.className = "sidebar-upgradeToggle"
-	toggle.textContent = "Toggle Upgrade"
-	toggle.addEventListener("click", () => {
-		upgraded = !upgraded;
-		show(document.getElementById("sidebar").skillName)
-	})
-	return toggle
+
+/**
+ * @param {Skill} skill
+ */
+async function makeTierToggle(skill) {
+	const field = document.createElement("div");
+	field.className = "sidebar-tierChanger"
+
+	if (skill.maxTier < 2) {
+		return field
+	}
+	for (let i = 1; i <= skill.maxTier; i++) {
+		const toggle = document.createElement("div");
+		toggle.classList.add("sidebar-tierChanger-button")
+		toggle.classList.add("toggle")
+		toggle.textContent = i
+		toggle.addEventListener("click", () => {
+			show(new Skill(skill.id, i))
+		})
+		field.appendChild(toggle)
+	}
+	return field
 
 }
-async function show(skillName) {
-	if (blacklist.passives.includes(skillName)) {
+/**
+ * @param {Skill} skill
+ */
+async function show(skill) {
+	if (blacklist.passives.includes(skill.id)) {
 		return
 	}
-	const name = data.passives[skillName].name[lang]
-	const collar = data.passives[skillName]["class"]
 
 
-	let desc
-	if (collar != "Disorder" && upgraded) {
-		desc = data.passives[skillName][2].desc[lang]
-	} else {
-		desc = data.passives[skillName].desc[lang]
+	const name = skill.get("name")[lang]
+	const collar = skill.get("class")
+	const desc = skill.get("desc")[lang]
+	console.log(name, desc, skill.tier)
+	console.log(skill)
 
-	}
-	if (!!name && !!collar) {
-
-
+	if (name && collar) {
 		const sidebar = document.getElementById("sidebar");
-		sidebar.innerHTML = ""
-		sidebar.skillName = skillName
+		const element = sidebar.getElementsByClassName("sidebar-element")[0]
+		element.innerHTML = ""
 
 		const thumbnail = document.createElement("div");
-		thumbnail.className = "sidebar-thumbnail-passive";
+		thumbnail.className = "sidebar-element-thumbnail-passive";
 
-		if (upgraded) {
+		if (skill.tier > 1 && collar != "Disorder") {
 			const crown = document.createElement("img");
-			crown.className = "sidebar-thumbnail-passive-shell";
+			crown.className = "sidebar-element-thumbnail-passive-shell";
 			crown.src = "./mewbox-data/shells/shellPassiveUpgradeCrown.svg"
 			thumbnail.appendChild(crown);
 		}
 
 		const ability = document.createElement("img");
-		ability.className = "sidebar-thumbnail-passive-ability";
-		ability.src = "mewbox-data/passiveIcons/" + skillName + ".svg"
+		ability.className = "sidebar-element-thumbnail-passive-ability";
+		ability.src = "mewbox-data/passiveIcons/" + skill.getIcon() + ".svg"
 		thumbnail.appendChild(ability);
 
 		const shell = document.createElement("img");
-		shell.className = "sidebar-thumbnail-passive-shell";
+		shell.className = "sidebar-element-thumbnail-passive-shell";
 		shell.src = "mewbox-data/shells/shellPassive" + collar + ".svg";
 		thumbnail.appendChild(shell);
 
-		if (upgraded) {
+		if (skill.tier > 1 && collar != "Disorder") {
 			const pip = document.createElement("img");
-			pip.className = "sidebar-thumbnail-passive-shell";
+			pip.className = "sidebar-element-thumbnail-passive-shell";
 			pip.src = "./mewbox-data/shells/shellPassiveUpgradePip.svg"
 			thumbnail.appendChild(pip);
 		}
 
-		sidebar.appendChild(thumbnail);
+		element.appendChild(thumbnail);
 
 		const title = document.createElement("div");
-		title.className = "sidebar-name";
+		title.className = "sidebar-element-name";
 		title.textContent = name
-		sidebar.appendChild(title);
+		element.appendChild(title);
 
 
-		const stats = await makeStatsElement(skillName)
-		if (!!stats) {
-			sidebar.appendChild(stats);
+		const stats = await makeStatsElement(skill)
+		if (stats) {
+			element.appendChild(stats);
 		}
 
 
 		const description = document.createElement("div");
-		description.className = "sidebar-description";
+		description.className = "sidebar-element-description";
 		description.textContent = desc
-		sidebar.appendChild(description);
+		element.appendChild(description);
 
-		if (collar != "Disorder") {
-			sidebar.appendChild(await makeUpgradeToggle())
+
+
+
+		let tierToggle = sidebar.getElementsByClassName("sidebar-tierChanger")[0]
+		if (skill.id != sidebar.skill?.id) {
+			if (tierToggle) {
+				sidebar.removeChild(tierToggle)
+			}
+			tierToggle = await makeTierToggle(skill)
+			sidebar.appendChild(tierToggle)
 		}
 
+		const tierToggles = tierToggle.getElementsByClassName("sidebar-tierChanger-button")
+		Array.from(tierToggles).forEach((tierToggle, index) => {
+			tierToggle.classList.remove("active")
+			if (index + 1 == skill.tier)
+				tierToggle.classList.add("active")
+		});
+		sidebar.prepend(element)
+		sidebar.skill = skill
 
 		return
 	}
-	console.warn("Couldn't load " + skillName + " with traits name: " + name + " and class: " + collar)
+	console.warn("Couldn't load " + skill.id + " with traits name: " + name + " and class: " + collar)
 
 
 }
 
 
 async function elementOnClick(event) {
-	const skillName = event.currentTarget.skillName
-	upgraded = false
-	show(skillName)
+	show(new Skill(event.currentTarget.skill.id, document.getElementById("sidebar")?.skill?.tier))
 }
 
-async function makeElement(skillName) {
-	if (blacklist.passives.includes(skillName)) {
+
+/**
+ * @param {Skill} skill
+ */
+async function makeElement(skill) {
+	if (blacklist.passives.includes(skill.id)) {
 		return
 	}
-	const name = data.passives[skillName].name[lang]
-	const collar = data.passives[skillName]["class"]
-	if (!!name && !!collar) {
+	const name = skill.get("name")[lang]
+	const collar = skill.get("class")
+	if (name && collar) {
 		const main = document.createElement("div");
 		main.className = "main-element";
-		main.skillName = skillName;
+		main.skill = skill;
 		main.addEventListener("click", elementOnClick);
+
 		const thumbnail = document.createElement("div");
 		thumbnail.className = "main-thumbnail-passive";
 
 		const ability = document.createElement("img");
 		ability.className = "main-thumbnail-passive-ability";
-		ability.src = "mewbox-data/passiveIcons/" + skillName + ".svg"
+		ability.src = "mewbox-data/passiveIcons/" + skill.getIcon() + ".svg"
 		thumbnail.appendChild(ability);
 
 		const shell = document.createElement("img");
@@ -254,7 +309,7 @@ async function makeElement(skillName) {
 
 		return main;
 	}
-	console.warn("Couldn't load " + skillName + " with traits name: " + name + " and class: " + collar)
+	console.warn("Couldn't load " + skill.id + " with traits name: " + name + " and class: " + collar)
 }
 
 async function sortByLangName(object) {
@@ -270,22 +325,42 @@ async function sortByLangName(object) {
 	for (const id of Object.keys(langToId).sort()) {
 		sorted.push(langToId[id])
 	}
-	console.log(sorted)
 	return sorted
 
 }
 
-await loadData();
-
-
-
-
-for (const passiveName of await sortByLangName(data.passives)) {
-	const child = await makeElement(passiveName);
-	if (!!child) {
-		document.getElementById("main").appendChild(child)
+/**
+ * @param {KeyboardEvent} event - The keyboard event object.
+ */
+async function keybindHandler(event) {
+	let key = event.key
+	if (!isNaN(Number.parseInt(key))) {
+		if (key == 0) {
+			key = 10
+		}
+		console.log(Number.parseInt(key))
+		const skill = document.getElementById("sidebar")?.skill;
+		if (skill) {
+			show(new Skill(skill.id, key))
+		}
 	}
 }
 
-console.log(data.passives.Omniscience)
-console.log(data.passives)
+document.addEventListener('keydown', keybindHandler);
+
+async function init() {
+	await loadData();
+
+	for (const passiveName of await sortByLangName(data.passives)) {
+		const child = await makeElement(
+			new Skill(passiveName)
+		);
+		if (child) {
+			document.getElementById("main").appendChild(child)
+		}
+	}
+
+}
+
+
+init()

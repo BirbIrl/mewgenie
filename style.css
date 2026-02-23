@@ -48,21 +48,24 @@ header {
 	overflow: hidden;
 }
 
+/*
+.sidebar-element {}
+*/
 
-.sidebar-thumbnail-passive {
+.sidebar-element-thumbnail-passive {
 	position: relative;
 	height: 200px;
 	filter: drop-shadow(7px 7px 2px #00000088)
 }
 
-.sidebar-thumbnail-passive-shell {
+.sidebar-element-thumbnail-passive-shell {
 	position: absolute;
 	top: 45%;
 	left: 50%;
 	transform: translate(-50%, -50%) scale(2.5);
 }
 
-.sidebar-thumbnail-passive-ability {
+.sidebar-element-thumbnail-passive-ability {
 	position: absolute;
 	top: 45%;
 	left: 50%;
@@ -70,27 +73,36 @@ header {
 }
 
 
-.sidebar-name {
+.sidebar-element-name {
 	font-size: 1.5rem;
 	padding: 2px;
 	text-align: center;
 	font-weight: bold;
 }
 
-.sidebar-stats {
+.sidebar-element-stats {
 	font-size: 1.5em;
 	padding: 2px;
 	text-align: center;
 	font-weight: bold;
 }
 
-.sidebar-upgradeToggle {
+.sidebar-tierChanger {
 	padding: 5px;
-	border-width: 10px;
-	border-color: white;
-	background-color: #00000088;
 	margin-top: auto;
 	align-self: center;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	justify-content: center;
+}
+
+.sidebar-tierChanger-button {
+	padding: 5px;
+	margin: 5px;
+	background-color: #00000088;
+	justify-content: center;
 }
 
 .mewbox-icon {
@@ -123,6 +135,7 @@ header {
 }
 
 .main-element {
+
 	position: relative;
 	padding: 8px;
 	text-align: center;
@@ -136,6 +149,8 @@ header {
 
 
 .main-thumbnail-passive {
+
+	cursor: pointer;
 	position: relative;
 	height: 120px;
 	width: 200px;
@@ -159,4 +174,23 @@ header {
 	top: 45%;
 	left: 50%;
 	transform: translate(-50%, -40%) scale(1.5);
+}
+
+
+/* boilerplate i found, to be edited */
+.toggle {
+	padding: 0.5em;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: 0.3s ease;
+	background-color: #00000088;
+}
+
+
+.toggle:hover {
+	background-color: #3338;
+}
+
+.toggle.active {
+	background-color: #333;
 }
