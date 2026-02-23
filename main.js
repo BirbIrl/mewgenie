@@ -1,4 +1,10 @@
-//TODO: mewbox-unboxer should output the stat icons in a fixed size
+//TODO: 
+//- mewbox-unboxer should output the stat icons in a fixed size
+//- deja vu has three upgrade tiers. support for buttons for any number of tiers
+//	- allow for name overrides in upgrades
+//- split by classes
+//- allow showing raw data
+//- 
 
 const lang = "en"
 var upgraded = false
