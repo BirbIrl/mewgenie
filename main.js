@@ -1,10 +1,10 @@
 //TODO: 
-//- mewbox-unboxer should output the stat icons in a fixed size
-//- deja vu has three upgrade tiers. support for buttons for any number of tiers
-//	- allow for name overrides in upgrades
 //- split by classes
 //- allow showing raw data
-//- the upgrade crown for passives needs to be colored
+
+
+//Known issues:
+//- mewbox-unboxer should output the stat icons in a fixed size
 
 const lang = "en"
 
@@ -47,8 +47,10 @@ const blacklist = {
 }
 
 async function loadData() {
-	const response = await fetch("mewbox-data/passives.json");
-	data.passives = await response.json();
+	const passivesResponse = await fetch("mewbox-data/passives.json");
+	data.passives = await passivesResponse.json();
+	const mewboxResponse = await fetch("mewbox-data/mewbox.json");
+	data.mewbox = await mewboxResponse.json();
 }
 
 function getStatName(shortName) {
@@ -180,6 +182,16 @@ async function makeDescription(skill) {
 	for (var result of desc.matchAll(/\[img:(.*?)\]/g)) {
 		desc = desc.replace(result[0], '<img title="' + result[1] + ' " class="mewbox-icon" src="mewbox-data/fontIcons/' + result[1] + '.svg">')
 	}
+
+	for (var result of desc.matchAll(/\[s:(..*?)\]/g)) {
+		desc = desc.replace(result[0], '<i style="color: #FFFA; font-size: ' + result[1] + 'em">(')
+		console.log(desc)
+	}
+
+	for (var result of desc.matchAll(/\[\/s\]/g)) {
+		desc = desc.replace(result[0], ')</i>')
+	}
+
 	description.innerHTML = desc;
 	return description
 }
