@@ -33,7 +33,6 @@ body {
 header {
 	padding: 10px;
 	background: #000000BB;
-	flex-shrink: 0;
 }
 
 .sidebar {

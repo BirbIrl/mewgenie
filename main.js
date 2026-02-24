@@ -231,7 +231,6 @@ async function show(skill) {
 
 	const name = skill.getName()
 	const collar = skill.get("class")
-	const desc = skill.getDescription()
 
 	if (name && collar) {
 		const sidebar = document.getElementById("sidebar");
