@@ -4,7 +4,7 @@
 //	- allow for name overrides in upgrades
 //- split by classes
 //- allow showing raw data
-//- 
+//- the upgrade crown for passives needs to be colored
 
 const lang = "en"
 
@@ -28,6 +28,7 @@ const blacklist = {
 		"DeathChill",
 		"LongStrider",
 		"VoidSoul",
+		"Deathless",
 		"STARTER_PLACEHOLDER_Butcher",
 		"STARTER_PLACEHOLDER_Colorless",
 		"STARTER_PLACEHOLDER_Druid",
@@ -50,7 +51,7 @@ async function loadData() {
 	data.passives = await response.json();
 }
 
-async function getStatName(shortName) {
+function getStatName(shortName) {
 	switch (shortName) {
 		case "str":
 			return "Strength";
@@ -71,6 +72,7 @@ async function getStatName(shortName) {
 }
 
 
+/* Todo: instead of using get every time just load the entire class except for numbered keys and then overwrite them with the tier selected*/
 class Skill {
 	constructor(skillId, tier) {
 		this.id = skillId
@@ -104,6 +106,21 @@ class Skill {
 		return icon ?? this.id
 	}
 
+	/**
+	 * @returns {String}
+	 */
+	getName() {
+		return this.get("name")[lang]
+	}
+
+
+	/**
+	 * @returns {String}
+	 */
+	getDescription() {
+		return this.get("desc")[lang]
+	}
+
 }
 
 async function makeStatsElement(skill) {
@@ -120,7 +137,7 @@ async function makeStatsElement(skill) {
 		const img = document.createElement("img")
 		img.title = "Shield"
 		img.className = "mewbox-icon"
-		img.src = "mewbox-data/fontIcons/Shield.svg"
+		img.src = "mewbox-data/fontIcons/shield.svg"
 		span.appendChild(img)
 		div.appendChild(span)
 	}
@@ -142,7 +159,7 @@ async function makeStatsElement(skill) {
 		}
 		span.appendChild(document.createTextNode(amount + " "));
 		const img = document.createElement("img")
-		img.title = await getStatName(statName)
+		img.title = getStatName(statName)
 		img.className = "mewbox-icon"
 		img.src = "mewbox-data/fontIcons/" + statName + ".svg"
 		span.appendChild(img)
@@ -150,6 +167,21 @@ async function makeStatsElement(skill) {
 	}
 	return div
 
+}
+/**
+ * @param {Skill} skill
+ */
+async function makeDescription(skill) {
+	let description = document.createElement("div");
+	description.className = "sidebar-element-description";
+	let desc = skill.getDescription();
+
+	console.log(desc)
+	for (var result of desc.matchAll(/\[img:(.*?)\]/g)) {
+		desc = desc.replace(result[0], '<img title="' + result[1] + ' " class="mewbox-icon" src="mewbox-data/fontIcons/' + result[1] + '.svg">')
+	}
+	description.innerHTML = desc;
+	return description
 }
 
 
@@ -185,11 +217,9 @@ async function show(skill) {
 	}
 
 
-	const name = skill.get("name")[lang]
+	const name = skill.getName()
 	const collar = skill.get("class")
-	const desc = skill.get("desc")[lang]
-	console.log(name, desc, skill.tier)
-	console.log(skill)
+	const desc = skill.getDescription()
 
 	if (name && collar) {
 		const sidebar = document.getElementById("sidebar");
@@ -202,7 +232,8 @@ async function show(skill) {
 		if (skill.tier > 1 && collar != "Disorder") {
 			const crown = document.createElement("img");
 			crown.className = "sidebar-element-thumbnail-passive-shell";
-			crown.src = "./mewbox-data/shells/shellPassiveUpgradeCrown.svg"
+			console.log(collar)
+			crown.src = "./mewbox-data/shells/shellPassiveUpgradeCrown" + collar + ".svg"
 			thumbnail.appendChild(crown);
 		}
 
@@ -237,9 +268,7 @@ async function show(skill) {
 		}
 
 
-		const description = document.createElement("div");
-		description.className = "sidebar-element-description";
-		description.textContent = desc
+		const description = await makeDescription(skill)
 		element.appendChild(description);
 
 
@@ -283,7 +312,7 @@ async function makeElement(skill) {
 	if (blacklist.passives.includes(skill.id)) {
 		return
 	}
-	const name = skill.get("name")[lang]
+	const name = skill.getName()
 	const collar = skill.get("class")
 	if (name && collar) {
 		const main = document.createElement("div");
@@ -338,7 +367,6 @@ async function keybindHandler(event) {
 		if (key == 0) {
 			key = 10
 		}
-		console.log(Number.parseInt(key))
 		const skill = document.getElementById("sidebar")?.skill;
 		if (skill) {
 			show(new Skill(skill.id, key))
