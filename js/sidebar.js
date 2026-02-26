@@ -1,4 +1,5 @@
 import Passive from '/js/mewgenerics/passive.js'
+import data from '/js/data.js'
 /**
  * @param {Mewgeneric} skill
  */
@@ -71,7 +72,8 @@ async function makeStatsElement(skill) {
 	if (!stats) {
 		return div
 	}
-	for (const statName of statTypes.values()) {
+
+	for (const statName in data.mewgenie.stats) {
 		let amount = stats[statName]
 		if (!amount) {
 			continue
@@ -86,7 +88,7 @@ async function makeStatsElement(skill) {
 		}
 		span.appendChild(document.createTextNode(amount + " "));
 		const img = document.createElement("img")
-		img.title = getStatName(statName)
+		img.title = data.mewgenie.stats[statName]
 		img.className = "mewgenie-icon"
 		img.src = "mewgenie-data/fontIcons/" + statName + ".svg"
 		span.appendChild(img)
