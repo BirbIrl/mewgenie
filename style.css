@@ -1,6 +1,6 @@
 @font-face {
 	font-family: tikaAdjusted;
-	src: url(mewbox-data/fonts/TikaAdjusted.ttf);
+	src: url(mewgenie-data/fonts/TikaAdjusted.ttf);
 }
 
 body {
@@ -23,7 +23,7 @@ body {
 	scrollbar-color: #888 transparent;
 }
 
-.mewbox {
+.mewgenie {
 	display: flex;
 	flex: 1;
 	text-shadow: 2px 2px black;
@@ -104,7 +104,7 @@ header {
 	justify-content: center;
 }
 
-.mewbox-icon {
+.mewgenie-icon {
 	vertical-align: -0.1em;
 	display: inline-block;
 	fill: currentColor;

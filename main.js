@@ -4,7 +4,7 @@
 
 
 //Known issues:
-//- mewbox-unboxer should output the stat icons in a fixed size
+//- mewgenie-unboxer should output the stat icons in a fixed size
 
 const lang = "en"
 
@@ -47,10 +47,10 @@ const blacklist = {
 }
 
 async function loadData() {
-	const passivesResponse = await fetch("mewbox-data/passives.json");
+	const passivesResponse = await fetch("mewgenie-data/passives.json");
 	data.passives = await passivesResponse.json();
-	const mewboxResponse = await fetch("mewbox-data/mewbox.json");
-	data.mewbox = await mewboxResponse.json();
+	const mewgenieResponse = await fetch("mewgenie-data/mewgenie.json");
+	data.mewgenie = await mewgenieResponse.json();
 }
 
 function getStatName(shortName) {
@@ -138,8 +138,8 @@ async function makeStatsElement(skill) {
 		span.appendChild(document.createTextNode("+" + shield + " "));
 		const img = document.createElement("img")
 		img.title = "Shield"
-		img.className = "mewbox-icon"
-		img.src = "mewbox-data/fontIcons/shield.svg"
+		img.className = "mewgenie-icon"
+		img.src = "mewgenie-data/fontIcons/shield.svg"
 		span.appendChild(img)
 		div.appendChild(span)
 	}
@@ -162,8 +162,8 @@ async function makeStatsElement(skill) {
 		span.appendChild(document.createTextNode(amount + " "));
 		const img = document.createElement("img")
 		img.title = getStatName(statName)
-		img.className = "mewbox-icon"
-		img.src = "mewbox-data/fontIcons/" + statName + ".svg"
+		img.className = "mewgenie-icon"
+		img.src = "mewgenie-data/fontIcons/" + statName + ".svg"
 		span.appendChild(img)
 		div.appendChild(span)
 	}
@@ -180,7 +180,7 @@ async function makeDescription(skill) {
 
 	console.log(desc)
 	for (var result of desc.matchAll(/\[img:(.*?)\]/g)) {
-		desc = desc.replace(result[0], '<img title="' + result[1] + ' " class="mewbox-icon" src="mewbox-data/fontIcons/' + result[1] + '.svg">')
+		desc = desc.replace(result[0], '<img title="' + result[1] + ' " class="mewgenie-icon" src="mewgenie-data/fontIcons/' + result[1] + '.svg">')
 	}
 
 	for (var result of desc.matchAll(/\[s:(..*?)\]/g)) {
@@ -244,24 +244,24 @@ async function show(skill) {
 			const crown = document.createElement("img");
 			crown.className = "sidebar-element-thumbnail-passive-shell";
 			console.log(collar)
-			crown.src = "./mewbox-data/shells/shellPassiveUpgradeCrown" + collar + ".svg"
+			crown.src = "./mewgenie-data/shells/shellPassiveUpgradeCrown" + collar + ".svg"
 			thumbnail.appendChild(crown);
 		}
 
 		const ability = document.createElement("img");
 		ability.className = "sidebar-element-thumbnail-passive-ability";
-		ability.src = "mewbox-data/passiveIcons/" + skill.getIcon() + ".svg"
+		ability.src = "mewgenie-data/passiveIcons/" + skill.getIcon() + ".svg"
 		thumbnail.appendChild(ability);
 
 		const shell = document.createElement("img");
 		shell.className = "sidebar-element-thumbnail-passive-shell";
-		shell.src = "mewbox-data/shells/shellPassive" + collar + ".svg";
+		shell.src = "mewgenie-data/shells/shellPassive" + collar + ".svg";
 		thumbnail.appendChild(shell);
 
 		if (skill.tier > 1 && collar != "Disorder") {
 			const pip = document.createElement("img");
 			pip.className = "sidebar-element-thumbnail-passive-shell";
-			pip.src = "./mewbox-data/shells/shellPassiveUpgradePip.svg"
+			pip.src = "./mewgenie-data/shells/shellPassiveUpgradePip.svg"
 			thumbnail.appendChild(pip);
 		}
 
@@ -336,12 +336,12 @@ async function makeElement(skill) {
 
 		const ability = document.createElement("img");
 		ability.className = "main-thumbnail-passive-ability";
-		ability.src = "mewbox-data/passiveIcons/" + skill.getIcon() + ".svg"
+		ability.src = "mewgenie-data/passiveIcons/" + skill.getIcon() + ".svg"
 		thumbnail.appendChild(ability);
 
 		const shell = document.createElement("img");
 		shell.className = "main-thumbnail-passive-shell";
-		shell.src = "mewbox-data/shells/shellPassive" + collar + ".svg";
+		shell.src = "mewgenie-data/shells/shellPassive" + collar + ".svg";
 		thumbnail.appendChild(shell);
 
 		main.appendChild(thumbnail);
