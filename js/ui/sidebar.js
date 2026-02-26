@@ -46,7 +46,7 @@ export class Sidebar {
 			toggle.classList.add("toggle")
 			toggle.textContent = i
 			toggle.addEventListener("click", () => {
-				show(new mewgeneric.constructor(mewgeneric.id, i))
+				this.show(new mewgeneric.constructor(mewgeneric.id, i))
 			})
 			field.appendChild(toggle)
 		}
