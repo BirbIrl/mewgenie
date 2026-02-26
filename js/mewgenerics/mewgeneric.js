@@ -1,4 +1,4 @@
-import { settings } from '../settings.js'
+import settings from '/js/settings.js'
 export class Mewgeneric {
 
 	constructor(id) {
@@ -21,4 +21,8 @@ export class Mewgeneric {
 	getDescription() {
 		return this.get("desc")[settings.lang]
 	}
+
+	makeElement() { }
 }
+
+export default Mewgeneric
