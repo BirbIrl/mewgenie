@@ -1,3 +1,5 @@
+import Passive from '/js/mewgenerics/passive.js'
+import { show } from '/js/sidebar.js'
 /**
  * @param {KeyboardEvent} event - The keyboard event object.
  */
@@ -9,7 +11,7 @@ async function keybindHandler(event) {
 		}
 		const skill = document.getElementById("sidebar")?.skill;
 		if (skill) {
-			show(new Passive(skill.id, key))
+			show(new Passive(skill.id, key)) //TODO make this not hardcoded like a dummy
 		}
 	}
 }

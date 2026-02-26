@@ -1,4 +1,4 @@
-import { statTypes } from '/js/data.js'
+import Passive from '/js/mewgenerics/passive.js'
 /**
  * @param {Mewgeneric} skill
  */
@@ -95,25 +95,6 @@ async function makeStatsElement(skill) {
 	return div
 }
 
-function getStatName(shortName) {
-	switch (shortName) {
-		case "str":
-			return "Strength";
-		case "dex":
-			return "Dexterity";
-		case "con":
-			return "Constitution";
-		case "int":
-			return "Intelligence";
-		case "cha":
-			return "Charisma";
-		case "spd":
-			return "Speed";
-		case "lck":
-			return "Luck";
-	}
-	console.error("Couldn't index stat called: " + shortName)
-}
 
 
 
@@ -138,7 +119,6 @@ export async function show(skill) {
 		if (skill.tier > 1 && collar != "Disorder") {
 			const crown = document.createElement("img");
 			crown.className = "sidebar-element-thumbnail-passive-shell";
-			console.log(collar)
 			crown.src = "./mewgenie-data/shells/shellPassiveUpgradeCrown" + collar + ".svg"
 			thumbnail.appendChild(crown);
 		}

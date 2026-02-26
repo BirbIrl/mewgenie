@@ -1,5 +1,5 @@
 import Mewgeneric from '/js/mewgenerics/mewgeneric.js'
-import { data } from '/js/data.js'
+import data from '/js/data.js'
 import { show } from '/js/sidebar.js'
 
 /* Todo: instead of using get every time just load the entire class except for numbered keys and then overwrite them with the tier selected*/
