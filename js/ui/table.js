@@ -1,28 +1,35 @@
-import { show } from '/js/ui/sidebar.js'
+import Sidebar from '/js/ui/sidebar.js'
 
-//TODO this is dumb, i should just have an object for the main content/sidebar maybe?
-
-export async function addToTable(skill) {
-	const name = skill.getName()
-	const collar = skill.get("class")
-	if (name && collar) {
-		const main = document.createElement("div");
-		main.className = "main-element";
-		const thumbnail = document.createElement("div")
-		thumbnail.className = "main-element-thumbnail-passive"
-		thumbnail.appendChild(await skill.makeThumbnail(1.5));
-		main.appendChild(thumbnail)
-		main.skill = skill
-		main.appendChild(document.createTextNode(name));
-		main.addEventListener("click", elementOnClick);
-
-		return main;
+class Table {
+	constructor() {
+		this.dom = document.getElementById("table")
 	}
-	console.warn("Couldn't load " + skill.id + " with traits name: " + name + " and class: " + collar)
+	async add(mewgeneric) {
+		const name = mewgeneric.getName()
+		const collar = mewgeneric.get("class")
+		if (!name || !collar) {
+			console.warn("Couldn't load " + mewgeneric.id + " with traits name: " + name + " and class: " + collar)
+			return
+		}
+		const table = document.createElement("div");
+		table.className = "table-element";
+		const thumbnail = document.createElement("div")
+		thumbnail.className = "table-element-thumbnail-passive"
+		thumbnail.appendChild(await mewgeneric.makeThumbnail(1.5));
+		table.appendChild(thumbnail)
+		table.mewgeneric = mewgeneric
+		table.appendChild(document.createTextNode(name));
+		table.addEventListener("click", elementOnClick);
+
+
+		this.dom.appendChild(table)
+
+	}
 }
 
 
 async function elementOnClick(event) {
-	const skill = event.currentTarget.skill
-	show(new skill.constructor(skill.id, document.getElementById("sidebar")?.skill?.tier))
+	const mewgeneric = event.currentTarget.mewgeneric
+	Sidebar.show(new mewgeneric.constructor(mewgeneric.id, document.getElementById("sidebar")?.mewgeneric?.tier))
 }
+export default new Table()

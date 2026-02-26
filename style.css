@@ -102,7 +102,7 @@ header {
 
 
 
-.main {
+.table {
 	padding: 20px;
 	display: flex;
 	flex-direction: row;
@@ -120,7 +120,7 @@ header {
 	scrollbar-width: thin;
 }
 
-.main-element {
+.table-element {
 
 
 	position: relative;
@@ -140,7 +140,7 @@ header {
 
 
 
-.main-element-thumbnail-passive {
+.table-element-thumbnail-passive {
 
 	cursor: pointer;
 	height: 120px;
@@ -149,7 +149,7 @@ header {
 	transition: transform .2s;
 }
 
-.main-element-thumbnail-passive:hover {
+.table-element-thumbnail-passive:hover {
 	transform: scale(1.1);
 }
 

@@ -9,7 +9,7 @@ import { data, loadData } from './js/data.js'
 import settings from './js/settings.js'
 import Passive from './js/mewgenerics/passive.js'
 import keybinds from './js/keybinds.js'
-import { addToTable } from "./js/ui/table.js"
+import table from "./js/ui/table.js"
 
 async function sortByLangName(object) {
 	const langToId = {}
@@ -36,11 +36,7 @@ async function init() {
 		if (data.mewgenie.blacklist.passives.includes(passiveName)) {
 			continue
 		}
-		const child =
-			await addToTable(new Passive(passiveName))
-		if (child) {
-			document.getElementById("main").appendChild(child)
-		}
+		table.add(new Passive(passiveName))
 	}
 
 }

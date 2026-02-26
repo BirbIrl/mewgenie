@@ -29,9 +29,6 @@ export class Passive extends Mewgeneric {
 		}
 		return this.data[key]
 	}
-	//transform: translate(-50%, -50%) scale(1.5);
-	//transform: translate(-50%, -40%) scale(1.5);
-	//2.5
 	async makeThumbnail(scale) {
 		const collar = this.get("class")
 		const thumbnail = document.createElement("div");
