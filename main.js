@@ -1,12 +1,14 @@
 //TODO: 
-//- split by classes
 //- allow showing raw data
 
 
 //Known issues:
 //- mewgenie-unboxer should output the stat icons in a fixed size
 
-const lang = "en"
+import { data } from './js/data.js'
+import { settings } from './js/settings.js'
+import { Mewgeneric } from './js/mewgenerics/mewgeneric.js'
+import { Passive } from './js/mewgenerics/passive.js'
 
 const statTypes = [
 	"str",
@@ -18,8 +20,9 @@ const statTypes = [
 	"lck",
 ]
 
-const data = {
-	passives: null,
+
+const elements = {
+	passives: {}
 }
 
 const blacklist = {
@@ -74,57 +77,6 @@ function getStatName(shortName) {
 }
 
 
-/* Todo: instead of using get every time just load the entire class except for numbered keys and then overwrite them with the tier selected*/
-class Skill {
-	constructor(skillId, tier) {
-		this.id = skillId
-		this.data = data.passives[this.id];
-		this.tier = tier ?? 1;
-
-		this.maxTier = 1
-		while (this.data[this.maxTier + 1]) {
-			this.maxTier++
-		}
-		if (this.tier > this.maxTier)
-			this.tier = this.maxTier
-
-	}
-
-	get(key, tier) {
-		tier = tier ?? this.tier
-		var value;
-		for (let i = tier; i > 0; i--) {
-			if (this.data[i]) {
-				value = this.data[i][key]
-				if (value)
-					return value
-			}
-		}
-		return this.data[key]
-	}
-
-	getIcon() {
-		let icon = this.get("icon")
-		return icon ?? this.id
-	}
-
-	/**
-	 * @returns {String}
-	 */
-	getName() {
-		return this.get("name")[lang]
-	}
-
-
-	/**
-	 * @returns {String}
-	 */
-	getDescription() {
-		return this.get("desc")[lang]
-	}
-
-}
-
 async function makeStatsElement(skill) {
 	const stats = skill.get("stats")
 	const shield = skill.get("shield")
@@ -171,7 +123,7 @@ async function makeStatsElement(skill) {
 
 }
 /**
- * @param {Skill} skill
+ * @param {Mewgeneric} skill
  */
 async function makeDescription(skill) {
 	let description = document.createElement("div");
@@ -198,7 +150,7 @@ async function makeDescription(skill) {
 
 
 /**
- * @param {Skill} skill
+ * @param {Mewgeneric} skill
  */
 async function makeTierToggle(skill) {
 	const field = document.createElement("div");
@@ -213,7 +165,7 @@ async function makeTierToggle(skill) {
 		toggle.classList.add("toggle")
 		toggle.textContent = i
 		toggle.addEventListener("click", () => {
-			show(new Skill(skill.id, i))
+			show(new Passive(skill.id, i))
 		})
 		field.appendChild(toggle)
 	}
@@ -221,7 +173,7 @@ async function makeTierToggle(skill) {
 
 }
 /**
- * @param {Skill} skill
+ * @param {Mewgeneric} skill
  */
 async function show(skill) {
 	if (blacklist.passives.includes(skill.id)) {
@@ -312,12 +264,12 @@ async function show(skill) {
 
 
 async function elementOnClick(event) {
-	show(new Skill(event.currentTarget.skill.id, document.getElementById("sidebar")?.skill?.tier))
+	show(new Passive(event.currentTarget.skill.id, document.getElementById("sidebar")?.skill?.tier))
 }
 
 
 /**
- * @param {Skill} skill
+ * @param {Mewgeneric} skill
  */
 async function makeElement(skill) {
 	if (blacklist.passives.includes(skill.id)) {
@@ -358,7 +310,7 @@ async function sortByLangName(object) {
 		if (blacklist.passives.includes(id)) {
 			continue
 		}
-		langToId[object[id].name[lang]] = id
+		langToId[object[id].name[settings.lang]] = id
 	}
 
 	const sorted = []
@@ -380,19 +332,20 @@ async function keybindHandler(event) {
 		}
 		const skill = document.getElementById("sidebar")?.skill;
 		if (skill) {
-			show(new Skill(skill.id, key))
+			show(new Passive(skill.id, key))
 		}
 	}
 }
 
 document.addEventListener('keydown', keybindHandler);
 
+
 async function init() {
 	await loadData();
 
-	for (const passiveName of await sortByLangName(data.passives)) {
+	for (const passiveName in data.passives) {
 		const child = await makeElement(
-			new Skill(passiveName)
+			new Passive(passiveName)
 		);
 		if (child) {
 			document.getElementById("main").appendChild(child)
