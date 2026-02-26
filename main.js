@@ -5,7 +5,7 @@
 //Known issues:
 //- mewgenie-unboxer should output the stat icons in a fixed size
 
-import { data, loadData } from './js/data.js'
+import data from './js/data.js'
 import settings from './js/settings.js'
 import Passive from './js/mewgenerics/passive.js'
 import keybinds from './js/keybinds.js'
@@ -30,7 +30,7 @@ async function sortByLangName(object) {
 
 
 async function init() {
-	await loadData();
+	await data.init();
 
 	for (const passiveName in data.passives) {
 		if (data.mewgenie.blacklist.passives.includes(passiveName)) {
@@ -40,7 +40,6 @@ async function init() {
 	}
 
 }
-
 
 init()
 keybinds()

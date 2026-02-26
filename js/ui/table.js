@@ -3,6 +3,7 @@ import Sidebar from '/js/ui/sidebar.js'
 class Table {
 	constructor() {
 		this.dom = document.getElementById("table")
+		this.elements = {}
 	}
 	async add(mewgeneric) {
 		const name = mewgeneric.getName()
