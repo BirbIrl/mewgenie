@@ -22,7 +22,9 @@ export class Mewgeneric {
 		return this.get("desc")[settings.lang]
 	}
 
-	makeElement() { }
+	async makeMainElement() { }
+
+	async makeSidebarThumbnail() { }
 }
 
 export default Mewgeneric

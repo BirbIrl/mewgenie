@@ -57,19 +57,6 @@ header {
 	filter: drop-shadow(7px 7px 2px #00000088)
 }
 
-.sidebar-element-thumbnail-passive-shell {
-	position: absolute;
-	top: 45%;
-	left: 50%;
-	transform: translate(-50%, -50%) scale(2.5);
-}
-
-.sidebar-element-thumbnail-passive-ability {
-	position: absolute;
-	top: 45%;
-	left: 50%;
-	transform: translate(-50%, -40%) scale(2.5);
-}
 
 
 .sidebar-element-name {
@@ -153,32 +140,23 @@ header {
 
 
 
-.main-thumbnail-passive {
+.main-element-thumbnail-passive {
 
 	cursor: pointer;
-	position: relative;
 	height: 120px;
 	width: 200px;
 	filter: drop-shadow(7px 7px 2px #00000088);
 	transition: transform .2s;
 }
 
-.main-thumbnail-passive:hover {
+.main-element-thumbnail-passive:hover {
 	transform: scale(1.1);
 }
 
-.main-thumbnail-passive-shell {
+.thumbnail-passive {
 	position: absolute;
 	top: 45%;
 	left: 50%;
-	transform: translate(-50%, -50%) scale(1.5);
-}
-
-.main-thumbnail-passive-ability {
-	position: absolute;
-	top: 45%;
-	left: 50%;
-	transform: translate(-50%, -40%) scale(1.5);
 }
 
 

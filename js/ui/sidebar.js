@@ -40,7 +40,7 @@ async function makeTierToggle(skill) {
 		toggle.classList.add("toggle")
 		toggle.textContent = i
 		toggle.addEventListener("click", () => {
-			show(new Passive(skill.id, i))
+			show(new skill.constructor(skill.id, i))
 		})
 		field.appendChild(toggle)
 	}
@@ -115,34 +115,12 @@ export async function show(skill) {
 		const element = sidebar.getElementsByClassName("sidebar-element")[0]
 		element.innerHTML = ""
 
-		const thumbnail = document.createElement("div");
-		thumbnail.className = "sidebar-element-thumbnail-passive";
 
-		if (skill.tier > 1 && collar != "Disorder") {
-			const crown = document.createElement("img");
-			crown.className = "sidebar-element-thumbnail-passive-shell";
-			crown.src = "./mewgenie-data/shells/shellPassiveUpgradeCrown" + collar + ".svg"
-			thumbnail.appendChild(crown);
-		}
 
-		const ability = document.createElement("img");
-		ability.className = "sidebar-element-thumbnail-passive-ability";
-		ability.src = "mewgenie-data/passiveIcons/" + skill.getIcon() + ".svg"
-		thumbnail.appendChild(ability);
-
-		const shell = document.createElement("img");
-		shell.className = "sidebar-element-thumbnail-passive-shell";
-		shell.src = "mewgenie-data/shells/shellPassive" + collar + ".svg";
-		thumbnail.appendChild(shell);
-
-		if (skill.tier > 1 && collar != "Disorder") {
-			const pip = document.createElement("img");
-			pip.className = "sidebar-element-thumbnail-passive-shell";
-			pip.src = "./mewgenie-data/shells/shellPassiveUpgradePip.svg"
-			thumbnail.appendChild(pip);
-		}
-
-		element.appendChild(thumbnail);
+		const thumbnail = document.createElement("div")
+		thumbnail.className = "sidebar-element-thumbnail-passive"
+		thumbnail.appendChild(await skill.makeThumbnail(2.5));
+		element.appendChild(thumbnail)
 
 		const title = document.createElement("div");
 		title.className = "sidebar-element-name";
@@ -177,6 +155,7 @@ export async function show(skill) {
 			if (index + 1 == skill.tier)
 				tierToggle.classList.add("active")
 		});
+
 		sidebar.prepend(element)
 		sidebar.skill = skill
 

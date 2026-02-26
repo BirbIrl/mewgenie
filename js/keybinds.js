@@ -1,5 +1,5 @@
 import Passive from '/js/mewgenerics/passive.js'
-import { show } from '/js/sidebar.js'
+import { show } from '/js/ui/sidebar.js'
 /**
  * @param {KeyboardEvent} event - The keyboard event object.
  */
