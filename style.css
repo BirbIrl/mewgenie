@@ -75,7 +75,7 @@ header {
 
 .sidebar-tierChanger {
 	padding: 5px;
-	margin-top: auto;
+	margin-top: 10px;
 	align-self: center;
 	display: flex;
 	flex-direction: row;
@@ -207,7 +207,6 @@ header {
 }
 
 
-/* boilerplate i found, to be edited */
 .toggle {
 	padding: 0.5em;
 	border-radius: 4px;
