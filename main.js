@@ -17,7 +17,8 @@ async function sortByLangName(object) {
 		if (data.mewgenie.blacklist.passives.includes(id)) {
 			continue
 		}
-		langToId[object[id].name[settings.lang]] = id
+		console.log(data.passives[id])
+		langToId[data.passives[id].name[settings.lang]] = id
 	}
 
 	const sorted = []
@@ -32,7 +33,7 @@ async function sortByLangName(object) {
 async function init() {
 	await data.init();
 
-	for (const passiveName in data.passives) {
+	for (const passiveName of await sortByLangName(data.passives)) {
 		if (data.mewgenie.blacklist.passives.includes(passiveName)) {
 			continue
 		}
