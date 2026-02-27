@@ -1,5 +1,6 @@
 import Sidebar from '/js/ui/sidebar.js'
 import Category from '/js/ui/category.js'
+import settings from '/js/settings.js'
 import data from '/js/data.js'
 /*
  
@@ -37,7 +38,7 @@ class Table {
 			if (collarId == "Disorder") {
 				this.groups["passives"][collarId] = new Category("Disorders")
 			} else {
-				this.groups["passives"][collarId] = new Category(collarId, "./mewgenie-data/collarIcons/" + collarId + ".svg")
+				this.groups["passives"][collarId] = new Category(data.mewgenie.collars[collarId].name[settings.lang], "./mewgenie-data/collarIcons/" + collarId + ".svg")
 			}
 			this.groups["passives"].order.push(collarId)
 		}

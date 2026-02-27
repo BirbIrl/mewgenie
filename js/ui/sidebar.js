@@ -60,6 +60,7 @@ export class Sidebar {
 	async makeStatsElement(mewgeneric) {
 		const stats = mewgeneric.get("stats")
 		const shield = mewgeneric.get("shield")
+		const divine_shield = mewgeneric.get("divine_shield")
 
 
 		const div = document.createElement("div");
@@ -72,6 +73,17 @@ export class Sidebar {
 			img.title = "Shield"
 			img.className = "mewgenie-icon"
 			img.src = "mewgenie-data/fontIcons/shield.svg"
+			span.appendChild(img)
+			div.appendChild(span)
+		}
+		if (divine_shield) {
+			let span = document.createElement("span")
+			span.style = "white-space: nowrap"
+			span.appendChild(document.createTextNode("+" + divine_shield + " "));
+			const img = document.createElement("img")
+			img.title = "Divine Shield"
+			img.className = "mewgenie-icon"
+			img.src = "mewgenie-data/fontIcons/divineshield.svg"
 			span.appendChild(img)
 			div.appendChild(span)
 		}
