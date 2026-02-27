@@ -123,6 +123,7 @@ header {
 }
 
 .table-category-header {
+	user-select: none;
 	padding: 10px;
 	background-color: #00000055;
 	font-size: 1.5em;
@@ -161,7 +162,7 @@ header {
 	transition: transform .2s ease;
 }
 
-.table-category-header-triangle:hover {
+.table-category-header-triangle.active {
 	transform: rotate(90deg);
 }
 
@@ -185,6 +186,7 @@ header {
 
 
 .table-element-thumbnail-passive {
+	user-select: none;
 
 	cursor: pointer;
 	height: 120px;

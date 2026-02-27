@@ -13,6 +13,7 @@ class Category {
 		category.appendChild(header)
 
 		const triangle = document.createElement("img")
+		this.triangle = triangle
 		triangle.src = "./assets/triangle.svg"
 		triangle.className = "table-category-header-triangle"
 		header.appendChild(triangle)
@@ -30,10 +31,9 @@ class Category {
 
 		const contents = document.createElement("div")
 		this.contents = contents
-		contents.className = "table-category-contents"
+		contents.classList.add("table-category-contents", "hidden")
 		category.appendChild(contents)
 
-		this.toggle()
 		this.table.appendChild(category)
 	}
 	async add(mewgeneric) {
@@ -60,6 +60,7 @@ class Category {
 
 	toggle = () => {
 		this.contents.classList.toggle("hidden");
+		this.triangle.classList.toggle("active");
 	}
 }
 
