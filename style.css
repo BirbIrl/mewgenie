@@ -60,7 +60,7 @@ header {
 
 
 .sidebar-element-name {
-	font-size: 1.5rem;
+	font-size: 1.5em;
 	padding: 2px;
 	text-align: center;
 	font-weight: bold;
@@ -103,15 +103,10 @@ header {
 
 
 .table {
-	padding: 20px;
+	padding: 5px;
 	display: flex;
 	flex-direction: row;
-	align-items: flex-start;
-	align-content: flex-start;
 	flex-wrap: wrap;
-
-	justify-content: center;
-	align-items: center;
 
 
 	width: calc(100% - 300px);
@@ -120,8 +115,57 @@ header {
 	scrollbar-width: thin;
 }
 
-.table-element {
+.table-category {
+	width: 100%;
+	border-radius: 10px;
+	margin-bottom: 5px;
+	background-color: #00000055;
+}
 
+.table-category-header {
+	padding: 10px;
+	background-color: #00000055;
+	font-size: 1.5em;
+	display: flex;
+
+	cursor: pointer;
+}
+
+.table-category-header:hover {
+	background-color: #00000088;
+}
+
+.table-category-contents {
+	display: flex;
+	flex-direction: row;
+	overflow: auto;
+	flex-wrap: wrap;
+	padding: 10px;
+
+	justify-content: center;
+	align-items: center;
+}
+
+.table-category-header-icon {
+	height: 1.75em;
+	filter: drop-shadow(2px 2px 0px #000000ff);
+	scale: 150%;
+	padding-left: 5px;
+}
+
+.table-category-header-triangle {
+	height: 1.75em;
+	scale: 60%;
+	padding-right: 10px;
+	filter: drop-shadow(3px 3px 0px #000000ff);
+	transition: transform .2s ease;
+}
+
+.table-category-header-triangle:hover {
+	transform: rotate(90deg);
+}
+
+.table-element {
 
 	position: relative;
 	padding: 8px;
@@ -147,6 +191,7 @@ header {
 	width: 200px;
 	filter: drop-shadow(7px 7px 2px #00000088);
 	transition: transform .2s;
+	rotate: 90;
 }
 
 .table-element-thumbnail-passive:hover {

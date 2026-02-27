@@ -17,7 +17,6 @@ async function sortByLangName(object) {
 		if (data.mewgenie.blacklist.passives.includes(id)) {
 			continue
 		}
-		console.log(data.passives[id])
 		langToId[data.passives[id].name[settings.lang]] = id
 	}
 
@@ -32,12 +31,14 @@ async function sortByLangName(object) {
 
 async function init() {
 	await data.init();
+	await table.init()
 
 	for (const passiveName of await sortByLangName(data.passives)) {
 		if (data.mewgenie.blacklist.passives.includes(passiveName)) {
 			continue
 		}
-		table.add(new Passive(passiveName))
+		const passive = new Passive(passiveName)
+		table.groups["passives"][passive.get("class")].add(passive)
 	}
 
 }
