@@ -14,9 +14,9 @@ export class Mewgeneric {
 	 * @returns {any} */
 	get(key, tier) { throw "this is an interface" }
 	/** @param {number} scale 
-	 * @returns {Promise<HTMLElement>}
+	 * @returns {HTMLElement}
 	 */
-	async makeThumbnail(scale) { throw "this is an interface" }
+	makeThumbnail(scale) { throw "this is an interface" }
 	getIcon() {
 		let icon = this.get("icon")
 		return icon ?? this.id

@@ -1,5 +1,6 @@
 import table from '/js/ui/table.js'
 import Sidebar from '/js/ui/sidebar.js'
+import filter from '/js/ui/filter.js'
 /** @param {KeyboardEvent} event */
 async function keybindHandler(event) {
 	const code = event.code
@@ -31,7 +32,7 @@ async function keybindHandler(event) {
 			active.toggle()
 		} else if (active.classList.contains("table-element")) {
 			//@ts-ignore
-			active.show()
+			active.object.showOnSidebar()
 		}
 	}
 	else if (code == "KeyH") {
@@ -47,9 +48,8 @@ async function keybindHandler(event) {
 		}
 	}
 	else if (code == "KeyC") {
-		const filter = document.getElementById("filter")
 		//@ts-ignore
-		filter.value = null
+		filter.dom.value = null
 	}
 }
 
@@ -57,8 +57,7 @@ async function keybindHandler(event) {
 async function keybindUpHandler(event) {
 	const code = event.code
 	if (code == "KeyF") {
-		const filter = document.getElementById("filter")
-		filter.focus()
+		filter.dom.focus()
 	}
 }
 

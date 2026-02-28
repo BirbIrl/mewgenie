@@ -35,9 +35,9 @@ export class Passive extends Mewgeneric {
 		return this.data[key]
 	}
 	/** @param {number} scale 
-	 * @returns {Promise<HTMLElement>}
+	 * @returns {HTMLElement}
 	*/
-	async makeThumbnail(scale) {
+	makeThumbnail(scale) {
 		const collar = this.get("class")
 		const thumbnail = document.createElement("div");
 

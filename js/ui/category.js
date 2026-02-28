@@ -1,5 +1,37 @@
 import Mewgeneric from '/js/mewgenerics/mewgeneric.js'
 import sidebar from '/js/ui/sidebar.js'
+
+class Element {
+	/** @param {Mewgeneric} mewgeneric */
+	constructor(mewgeneric) {
+		this.mewgeneric = mewgeneric
+		this.hidden = false
+		const name = mewgeneric.getName()
+		const element = document.createElement("div");
+		element.className = "table-element";
+		const thumbnail = document.createElement("div")
+		thumbnail.className = "table-element-thumbnail-passive"
+		thumbnail.appendChild(mewgeneric.makeThumbnail(1.5));
+		element.appendChild(thumbnail)
+		element.appendChild(document.createTextNode(name));
+		this.showOnSidebar = () => {
+			//@ts-ignore
+			sidebar.show(new mewgeneric.constructor(mewgeneric.id, document.getElementById("sidebar")?.mewgeneric?.tier))
+		}
+		element.addEventListener("click", this.showOnSidebar);
+		element.tabIndex = 0
+		//@ts-ignore
+		element.object = this
+		this.dom = element
+	}
+	show() {
+		this.dom.classList.toggle("hidden", false)
+	}
+	hide() {
+		this.dom.classList.toggle("hidden", true)
+	}
+}
+
 class Category {
 	/** @param {string} name
 	 * @param {string} id
@@ -9,6 +41,9 @@ class Category {
 		this.table = document.getElementById("table")
 		this.name = name
 		this.id = id
+		this.hidden = false
+		/** @type {Element[]} */
+		this.elements = []
 
 		const category = document.createElement("div")
 		this.dom = category
@@ -49,33 +84,9 @@ class Category {
 	}
 	/** @param {Mewgeneric} mewgeneric */
 	async add(mewgeneric) {
-		const name = mewgeneric.getName()
-		const collar = mewgeneric.get("class")
-		if (!name || !collar) {
-			console.warn("Couldn't load " + mewgeneric.id + " with traits name: " + name + " and class: " + collar)
-			return
-		}
-		const element = document.createElement("div");
-		element.className = "table-element";
-		const thumbnail = document.createElement("div")
-		thumbnail.className = "table-element-thumbnail-passive"
-		thumbnail.appendChild(await mewgeneric.makeThumbnail(1.5));
-		element.appendChild(thumbnail)
-		//@ts-ignore
-		element.mewgeneric = mewgeneric
-		element.appendChild(document.createTextNode(name));
-		//@ts-ignore
-		element.show = () => {
-			//@ts-ignore
-			sidebar.show(new mewgeneric.constructor(mewgeneric.id, document.getElementById("sidebar")?.mewgeneric?.tier))
-		}
-		//@ts-ignore
-		element.addEventListener("click", element.show);
-		element.tabIndex = 0
-
-
-		this.contents.appendChild(element)
-
+		const element = new Element(mewgeneric)
+		this.contents.appendChild(element.dom)
+		this.elements.push(element)
 	}
 
 	focus() {
@@ -95,6 +106,15 @@ class Category {
 	toggle = () => {
 		this.contents.classList.toggle("hidden");
 		this.triangle.classList.toggle("active");
+	}
+
+	show() {
+		this.hidden = false;
+		this.dom.classList.toggle("hidden", false)
+	}
+	hide() {
+		this.hidden = true;
+		this.dom.classList.toggle("hidden", true)
 	}
 }
 

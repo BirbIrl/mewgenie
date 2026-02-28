@@ -10,6 +10,7 @@ import settings from './js/settings.js'
 import Passive from './js/mewgenerics/passive.js'
 import keybinds from './js/keybinds.js'
 import table from "./js/ui/table.js"
+import filter from "./js/ui/filter.js"
 
 async function sortByLangName(object) {
 	const langToId = {}
