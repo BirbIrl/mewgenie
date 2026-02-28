@@ -38,15 +38,9 @@ class Filter {
 		return this.dom.value
 	}
 
-	isActivte() {
-		const filter = this.getFilterString()
-		return filter && filter.length > 1
-	}
-
 	update = async () => {
-		let filter = this.getFilterString()
 		const categories = table.activeGroup.byOrder
-		if (filter && filter.length > 1) {
+		if (this.getFilterString()) {
 			this.filter()
 			for (const category of categories) {
 				category.toggleOn()
