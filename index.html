@@ -16,19 +16,25 @@
 <body>
 	<script type="module" src="main.js"></script>
 	<header>
-		<img src="./assets/MewGenie.svg" style="height:3em;  vertical-align: middle;">
-		<span style="position: relative; top: 6px; ">
-			<b>MewGenie</b> - Work in Progress, by
-			<a href=" https://birbirl.dev" style="color: inherit">Birbirl</a>.
-			Source Code available on
-			<a href="https://github.com/birbirl/mewgenie" style="color: inherit">github</a>.
-		</span>
+		<div class="header-title">
+			<img src="./assets/MewGenie.svg" style="height:3em;  vertical-align: middle;">
+			<span style="position: relative; top: 6px; ">
+				<b>MewGenie</b> - Work in Progress, by
+				<a href=" https://birbirl.dev" style="color: inherit">Birbirl</a>.
+				Source Code available on
+				<a href="https://github.com/birbirl/mewgenie" style="color: inherit">github</a>.
+			</span>
+		</div>
+
+		<div class="header-filter">
+			<input type="text" id="filter" autocomplete="off" placeholder="Filter by...">
+		</div>
 	</header>
 	<div class="mewgenie">
 		<aside class="sidebar" id="sidebar">
 			<div class="sidebar-element"></div>
 		</aside>
-		<main id="table" class="table">
+		<main id="table" class="table" tabindex="-1">
 
 		</main>
 	</div>

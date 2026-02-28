@@ -1,0 +1,17 @@
+{
+	"compilerOptions": {
+		"checkJs": true,
+		"allowJs": true,
+		"module": "esnext",
+		"moduleResolution": "bundler",
+		"target": "es2022",
+		"paths": {
+			"/*": [
+				"./*"
+			]
+		}
+	},
+	"include": [
+		"js/**/*.js"
+	]
+}

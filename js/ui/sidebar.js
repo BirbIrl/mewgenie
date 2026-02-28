@@ -1,3 +1,4 @@
+import Mewgeneric from '/js/mewgenerics/mewgeneric.js'
 import data from '/js/data.js'
 
 
@@ -44,8 +45,9 @@ export class Sidebar {
 			const toggle = document.createElement("div");
 			toggle.classList.add("sidebar-tierChanger-button")
 			toggle.classList.add("toggle")
-			toggle.textContent = i
+			toggle.textContent = i.toString();
 			toggle.addEventListener("click", () => {
+				// @ts-ignore
 				this.show(new mewgeneric.constructor(mewgeneric.id, i))
 			})
 			field.appendChild(toggle)
@@ -153,6 +155,7 @@ export class Sidebar {
 
 
 			let tierToggle = this.dom.getElementsByClassName("sidebar-tierChanger")[0]
+			// @ts-ignore
 			if (mewgeneric.id != this.dom.mewgeneric?.id) {
 				if (tierToggle) {
 					this.dom.removeChild(tierToggle)
@@ -169,6 +172,7 @@ export class Sidebar {
 			});
 
 			this.dom.prepend(element)
+			// @ts-ignore
 			this.dom.mewgeneric = mewgeneric
 
 			return

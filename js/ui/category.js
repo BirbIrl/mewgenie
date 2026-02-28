@@ -1,15 +1,24 @@
+import Mewgeneric from '/js/mewgenerics/mewgeneric.js'
 import sidebar from '/js/ui/sidebar.js'
 class Category {
-	constructor(name, iconPath) {
+	/** @param {string} name
+	 * @param {string} id
+	 * @param {string} [iconPath]
+	 */
+	constructor(name, id, iconPath) {
 		this.table = document.getElementById("table")
+		this.name = name
+		this.id = id
 
 		const category = document.createElement("div")
 		this.dom = category
 		category.className = "table-category"
 
 		const header = document.createElement("div")
+		this.header = header
 		header.className = "table-category-header"
 		header.addEventListener("click", this.toggle);
+		//@ts-ignore
 		header.toggle = this.toggle
 		header.tabIndex = 0
 		category.appendChild(header)
@@ -38,6 +47,7 @@ class Category {
 
 		this.table.appendChild(category)
 	}
+	/** @param {Mewgeneric} mewgeneric */
 	async add(mewgeneric) {
 		const name = mewgeneric.getName()
 		const collar = mewgeneric.get("class")
@@ -51,17 +61,35 @@ class Category {
 		thumbnail.className = "table-element-thumbnail-passive"
 		thumbnail.appendChild(await mewgeneric.makeThumbnail(1.5));
 		element.appendChild(thumbnail)
+		//@ts-ignore
 		element.mewgeneric = mewgeneric
 		element.appendChild(document.createTextNode(name));
+		//@ts-ignore
 		element.show = () => {
+			//@ts-ignore
 			sidebar.show(new mewgeneric.constructor(mewgeneric.id, document.getElementById("sidebar")?.mewgeneric?.tier))
 		}
+		//@ts-ignore
 		element.addEventListener("click", element.show);
 		element.tabIndex = 0
 
 
 		this.contents.appendChild(element)
 
+	}
+
+	focus() {
+		this.header.focus()
+	}
+
+	toggleOn = () => {
+		this.contents.classList.toggle("hidden", false);
+		this.triangle.classList.toggle("active", true);
+	}
+
+	toggleOff = () => {
+		this.contents.classList.toggle("hidden", true);
+		this.triangle.classList.toggle("active", false);
 	}
 
 	toggle = () => {

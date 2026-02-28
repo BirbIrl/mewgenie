@@ -38,7 +38,7 @@ async function init() {
 			continue
 		}
 		const passive = new Passive(passiveName)
-		table.groups["passives"][passive.get("class")].add(passive)
+		table.groups["passives"].byId[passive.get("class")].add(passive)
 	}
 
 }

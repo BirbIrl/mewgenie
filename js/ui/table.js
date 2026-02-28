@@ -1,55 +1,53 @@
-import Sidebar from '/js/ui/sidebar.js'
 import Category from '/js/ui/category.js'
 import settings from '/js/settings.js'
 import data from '/js/data.js'
-/*
- 
-			<div class="table-category">
-				<div class="table-category-header">
-					<img src="./assets/triangle.svg" class="table-category-header-triangle">
-					Tinkerer
-					<img src="./mewgenie-data/collarIcons/Tinkerer.svg" class="table-category-header-icon">
-				</div>
-				<div class="table-category-contents">Hyello</div>
-			</div>
 
-			<div class="table-category">
-				<div class="table-category-header">
-					<img src="./assets/triangle.svg" class="table-category-header-triangle">
-					Butcher
-					<img src="./mewgenie-data/collarIcons/Butcher.svg" class="table-category-header-icon">
-				</div>
-				<div class=="table-category-contents">Hyello</div>
-			</div>
-	*/
+class Group {
+	/** @param {string} name */
+	constructor(name) {
+		this.name = name
+		/** @type {Object<string,Category>}*/
+		this.byId = {}
+		/** @type {Category[]}*/
+		this.byOrder = []
+	}
+
+	/** @param {Category} category */
+	add(category) {
+		this.byId[category.id] = category
+		this.byOrder.push(category)
+	}
+
+}
 
 class Table {
 	constructor() {
 		this.dom = document.getElementById("table")
+		/** @type {Object<string,Group>}*/
 		this.groups = {
-			"passives": {
-				order: []
-			}
+			"passives": new Group("passives")
 		}
+		this.activeGroup = this.groups.passives
 	}
 
 	async init() {
+		const passives = this.groups["passives"]
 		for (const collarId of data.mewgenie.collarOrder) {
 			if (collarId == "Disorder") {
-				this.groups["passives"][collarId] = new Category("Disorders")
+				passives.add(new Category("Disorders", collarId))
 			} else {
-				this.groups["passives"][collarId] = new Category(data.mewgenie.collars[collarId].name[settings.lang], "./mewgenie-data/collarIcons/" + collarId + ".svg")
+				passives.add(new Category(data.mewgenie.collars[collarId].name[settings.lang], collarId, "./mewgenie-data/collarIcons/" + collarId + ".svg"))
 			}
-			this.groups["passives"].order.push(collarId)
 		}
 
-		this.showGroup("passives")
+		this.showGroup(passives)
 	}
 
-	async showGroup(name) {
+	/** @param {Group} group*/
+	async showGroup(group) {
 		this.dom.textContent = "";
-		for (const category of this.groups[name].order) {
-			this.dom.appendChild(this.groups[name][category].dom)
+		for (const category of group.byOrder) {
+			this.dom.appendChild(category.dom)
 		}
 	}
 }

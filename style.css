@@ -31,8 +31,28 @@ body {
 }
 
 header {
-	padding: 10px;
+	padding: 5px;
 	background: #000000BB;
+	flex-direction: row;
+	display: flex;
+}
+
+.header-title {
+	margin-left: 10px
+}
+
+.header-filter {
+	margin-left: auto;
+	align-content: center;
+	margin-right: 10px;
+}
+
+input {
+	font-family: tikaAdjusted;
+	background-color: #00000055;
+	border-color: transparent;
+	color: white;
+	font-size: 1em;
 }
 
 .sidebar {
