@@ -105,8 +105,9 @@ header {
 .table {
 	padding: 5px;
 	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
+
+	flex-direction: column;
+	flex-wrap: nowrap;
 
 
 	width: calc(100% - 300px);
@@ -181,6 +182,7 @@ header {
 
 .hidden {
 	display: none;
+	visibility: hidden;
 }
 
 
