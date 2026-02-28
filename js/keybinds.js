@@ -12,6 +12,14 @@ async function keybindHandler(event) {
 		if (mewgeneric) {
 			Sidebar.show(new mewgeneric.constructor(mewgeneric.id, key)) //TODO make this not hardcoded like a dummy
 		}
+	} else if (event.key == "Enter") {
+		const active = document.activeElement
+		if (active.classList.contains("table-category-header")) {
+
+			active.toggle()
+		} else if (active.classList.contains("table-element")) {
+			active.show()
+		}
 	}
 }
 

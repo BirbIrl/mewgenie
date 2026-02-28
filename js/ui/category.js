@@ -10,6 +10,8 @@ class Category {
 		const header = document.createElement("div")
 		header.className = "table-category-header"
 		header.addEventListener("click", this.toggle);
+		header.toggle = this.toggle
+		header.tabIndex = 0
 		category.appendChild(header)
 
 		const triangle = document.createElement("img")
@@ -51,7 +53,11 @@ class Category {
 		element.appendChild(thumbnail)
 		element.mewgeneric = mewgeneric
 		element.appendChild(document.createTextNode(name));
-		element.addEventListener("click", elementOnClick);
+		element.show = () => {
+			sidebar.show(new mewgeneric.constructor(mewgeneric.id, document.getElementById("sidebar")?.mewgeneric?.tier))
+		}
+		element.addEventListener("click", element.show);
+		element.tabIndex = 0
 
 
 		this.contents.appendChild(element)
@@ -64,10 +70,5 @@ class Category {
 	}
 }
 
-
-async function elementOnClick(event) {
-	const mewgeneric = event.currentTarget.mewgeneric
-	sidebar.show(new mewgeneric.constructor(mewgeneric.id, document.getElementById("sidebar")?.mewgeneric?.tier))
-}
 
 export default Category
