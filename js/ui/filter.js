@@ -20,6 +20,8 @@ class Filter {
 			}
 			if (empty) {
 				category.hide()
+			} else {
+				category.show()
 			}
 		}
 	}
