@@ -46,7 +46,7 @@ header {
 .header-filter {
 	margin-left: auto;
 	align-content: center;
-	background: #000000FF;
+	background: #000000CC;
 	padding-left: 10px;
 	padding-right: 10px;
 	border-radius: 10px;
@@ -273,6 +273,7 @@ input {
 	background-color: #000000DD;
 	border-radius: 10px;
 	position: fixed;
+	min-width: 500px;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);

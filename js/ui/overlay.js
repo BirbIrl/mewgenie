@@ -1,13 +1,3 @@
-/*
- 
-				<div class="overlay-header-button" id="overlay-header-button-settings" tabindex="1"> Settings </div>
-				<div class="overlay-header-button" id="overlay-header-button-keybinds" tabindex="1"> Keybinds </div>
-				<div class="overlay-header-button hidden" id="overlay-header-button-changelog" tabindex="1"> Changelog
-				</div>
-				<div class="overlay-header-button" id="overlay-header-button-about" tabindex="1"> About </div>
-				<div class="overlay-header-button" id="overlay-header-button-close" style="margin-left:auto"
-					tabindex="1"> X </div>
-	*/
 class Tab {
 	/**@param {Overlay} overlay 
 	 * @param {String} name */
@@ -42,7 +32,6 @@ class Overlay {
 	/** @param {string} name  */
 	registerTab(name) {
 		this.tabs[name] = new Tab(this, name)
-
 	}
 
 	/**@param {Tab} tabToFocus  */
@@ -57,8 +46,16 @@ class Overlay {
 		}
 	}
 
+	/** @param {boolean} [force]  */
+	toggle(force) {
+		this.dom.classList.toggle("hidden", force)
+		if (!this.dom.classList.contains("hidden")) {
+			this.showTab(this.tabs["settings"])
+		}
+	}
+
 	registerSettingsButton() {
-		document.getElementById("settings").addEventListener("click", () => { this.dom.classList.toggle("hidden") })
+		document.getElementById("settings").addEventListener("click", () => { this.toggle() })
 	}
 
 	makeExitButton() {
