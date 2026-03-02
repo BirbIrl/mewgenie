@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="./style.css">
 	<title>MewGenie</title>
-	<link rel="icon" type="image/png" href="./assets/MewGenie.png">
+	<link rel="icon" type="image/png" href="./assets/MewGenie_small.png">
 	<meta property="og:title" content="MewGenie" />
 	<meta property="og:description" content="Mewgenics Encyclopedia" />
 	<meta property="og:image" content="https://mewgenie.com/assets/MewGenie.png" />
@@ -29,13 +29,118 @@
 		<div class="header-filter">
 			<input type="text" id="filter" autocomplete="off" placeholder="Filter by...">
 		</div>
+
+		<div id="settings" tabindex="0">
+			<img class="header-settings" style="height:3em" src="./assets/settings.png">
+		</div>
 	</header>
 	<div class="mewgenie">
 		<aside class="sidebar" id="sidebar">
 			<div class="sidebar-element"></div>
 		</aside>
 		<main id="table" class="table" tabindex="-1">
-
 		</main>
+		<div id="overlay" class="overlay hidden">
+			<div class="overlay-header">
+			</div>
+			<div class="overlay-content">
+				<div id="overlay-settings" class="overlay-settings">
+					<div id="overlay-settings-spoiler" class="overlay-settings-spoiler">
+						<h2 style="margin-top:0px">Shown Collars (spoilers):</h2>
+						<img src="./mewgenie-data/collarIcons/Colorless.svg" class="overlay-settings-spoiler-icon"
+							id="overlay-settings-show-class-Colorless">
+						<img src="./mewgenie-data/collarIcons/Fighter.svg" class="overlay-settings-spoiler-icon">
+						<img src="./mewgenie-data/collarIcons/Hunter.svg" class="overlay-settings-spoiler-icon">
+						<img src="./mewgenie-data/collarIcons/Mage.svg" class="overlay-settings-spoiler-icon">
+						<img src="./mewgenie-data/collarIcons/Tank.svg" class="overlay-settings-spoiler-icon">
+						<img src="./mewgenie-data/collarIcons/Medic.svg" class="overlay-settings-spoiler-icon">
+						<img src="./mewgenie-data/collarIcons/Thief.svg" class="overlay-settings-spoiler-icon covered">
+						<img src="./mewgenie-data/collarIcons/Necromancer.svg" class="overlay-settings-spoiler-icon ">
+						<img src="./mewgenie-data/collarIcons/Tinkerer.svg" class="overlay-settings-spoiler-icon ">
+						<img src="./mewgenie-data/collarIcons/Butcher.svg" class="overlay-settings-spoiler-icon ">
+						<img src="./mewgenie-data/collarIcons/Druid.svg" class="overlay-settings-spoiler-icon ">
+						<img src="./mewgenie-data/collarIcons/Psychic.svg" class="overlay-settings-spoiler-icon ">
+						<img src="./mewgenie-data/collarIcons/Monk.svg" class="overlay-settings-spoiler-icon ">
+						<img src="./mewgenie-data/collarIcons/Jester.svg" class="overlay-settings-spoiler-icon ">
+					</div>
+					<i style="font-size:0.75em">
+						You should only select the collars you have unlocked to avoid spoilers!
+					</i>
+					<div id="overlay-settings-toggles">
+						<h2>General Settings:</h2>
+						<input type="checkbox" id="overlay-settings-show-class-Disorder"
+							class="overlay-settings-checkbox">
+						<label for="overlay-settings-show-class-Disorder">Show Disorders</label>
+						<br>
+						Language:
+						<a class="overlay-settings-flag active" id="overlay-settings-flag-en">🇬🇧</a>
+						<a class="overlay-settings-flag" id="overlay-settings-flag-sp">🇪🇸</a>
+						<a class="overlay-settings-flag" id="overlay-settings-flag-fr">🇫🇷</a>
+						<a class="overlay-settings-flag" id="overlay-settings-flag-de">🇩🇪</a>
+						<a class="overlay-settings-flag" id="overlay-settings-flag-it">🇮🇹</a>
+						<a class="overlay-settings-flag" id="overlay-settings-flag-pt-br">🇧🇷</a>
+					</div>
+				</div>
+				<div id="overlay-about" class="hidden">
+					<h2 style="margin-top: 0px">
+						<img src="./assets/MewGenie.png" style="height:3em;  vertical-align: middle;">
+						<span style="position: relative; top: 6px; ">
+							MewGenie - a <a href="https://store.steampowered.com/app/686060/Mewgenics/" target="_blank"
+								class="link">
+								Mewgenics</a>
+							Encyclopedia by
+							<a href=" https://birbirl.dev" target="_blank" class="link">Birbirl</a>
+						</span>
+					</h2>
+					<p>
+						<b>
+							If you stumble upon any bugs or issues, please report them over on the <a
+								href="https://github.com/BirbIrl/mewgenie/issues" target="_blank" class="link">
+								issue tracker</a>.
+						</b>
+					</p>
+					<p>
+
+						This project is made of two parts:
+					<ul>
+						<li>
+							<a target="_blank" href="https://github.com/BirbIrl/mewgenie-unboxer" class="link">
+								MewGenie-Unboxer</a>
+							- a data parser that automatically extracts and compiles the game's
+							.gon, .csv and .swf files into json's and svg's.
+						</li>
+						<li>
+							<a target="_blank" href="https://github.com/BirbIrl/mewgenie" class="link">
+								MewGenie</a>
+							- the website used to display that data, you're seeing it now!
+						</li>
+					</ul>
+					Both are licensed under <a target="_blank"
+						href="https://github.com/BirbIrl/mewgenie/blob/main/LICENSE" class="link">GPL 3.0</a>, which
+					means you're free to make your own versions of this
+					software if you follow the license.
+
+					</p>
+					<p>
+						The goal of this project is to set a baseline of quality for free tools for mewgenics that
+						respect your time and privacy.
+						<br>
+						If you find MewGenie useful, consider giving it a star on <a target="_blank"
+							href="https://github.com/BirbIrl/mewgenie" class="link">Github</a>, or <a target="_blank"
+							class="link" href="https://buymeacoffee.com/birbirl">Donating</a> to me
+						:D
+					</p>
+					<a href="https://buymeacoffee.com/birbirl" target="_blank" class="overlay-about-coffee">
+						☕ Buy me a coffee!
+					</a>
+
+					<div>
+						<i style="font-size: 0.75em;"> Logo drawn by <a href="https://nuibunny64coms.carrd.co/"
+								target="_blank" class="link">Nui</a>, check out her socials!</i>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	</div>
 </body>

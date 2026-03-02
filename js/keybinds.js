@@ -1,6 +1,7 @@
 import table from '/js/ui/table.js'
 import Sidebar from '/js/ui/sidebar.js'
 import filter from '/js/ui/filter.js'
+import overlay from '/js/ui/overlay.js'
 /** @param {KeyboardEvent} event */
 async function keybindHandler(event) {
 	const code = event.code
@@ -8,6 +9,9 @@ async function keybindHandler(event) {
 	const active = document.activeElement
 
 	if (code == "Escape") {
+		if (!overlay.dom.classList.contains("hidden")) {
+			overlay.dom.classList.toggle("hidden", true)
+		}
 		table.activeGroup.byOrder[0].focus()
 		return
 	}
@@ -26,30 +30,32 @@ async function keybindHandler(event) {
 		if (mewgeneric) {
 			Sidebar.show(new mewgeneric.constructor(mewgeneric.id, num)) //TODO make this not hardcoded like a dummy
 		}
-	} else if (code == "Enter") {
-		if (active.classList.contains("table-category-header")) {
+	}
+
+	switch (code) {
+		case "Enter":
 			//@ts-ignore
-			active.toggle()
-		} else if (active.classList.contains("table-element")) {
+			active.click()
+			return
+		case "KeyH":
+			for (const category of table.activeGroup.byOrder) {
+				category.toggleOff()
+			}
+			return
+		case "KeyO":
+			for (const category of table.activeGroup.byOrder) {
+				category.toggleOn()
+			}
+			return
+		case "KeyS":
+			overlay.dom.classList.toggle("hidden")
+			if (!overlay.dom.classList.contains("hidden")) {
+				overlay.header.children[0].focus()
+			}
+			return
+		case "KeyC":
 			//@ts-ignore
-			active.object.showOnSidebar()
-		}
-	}
-	else if (code == "KeyH") {
-		const categories = table.activeGroup.byOrder
-		for (const category of categories) {
-			category.toggleOff()
-		}
-	}
-	else if (code == "KeyO") {
-		const categories = table.activeGroup.byOrder
-		for (const category of categories) {
-			category.toggleOn()
-		}
-	}
-	else if (code == "KeyC") {
-		//@ts-ignore
-		filter.dom.value = null
+			filter.dom.value = null
 	}
 }
 
