@@ -50,6 +50,7 @@ async function keybindHandler(event) {
 		case "KeyS":
 			overlay.toggle()
 			if (!overlay.dom.classList.contains("hidden")) {
+				//@ts-ignore
 				overlay.header.children[0].focus()
 			}
 			return

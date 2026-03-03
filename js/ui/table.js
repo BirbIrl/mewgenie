@@ -1,5 +1,5 @@
 import Category from '/js/ui/category.js'
-import settings from '/js/settings.js'
+import settings from '/js/ui/settings.js'
 import data from '/js/data.js'
 
 class Group {
@@ -33,10 +33,11 @@ class Table {
 	async init() {
 		const passives = this.groups["passives"]
 		for (const collarId of data.mewgenie.collarOrder) {
-			if (collarId == "Disorder") {
+			if (collarId == "Disorder" && settings.config.showDisorders) {
 				passives.add(new Category("Disorders", collarId))
-			} else {
-				passives.add(new Category(data.mewgenie.collars[collarId].name[settings.lang], collarId, "./mewgenie-data/collarIcons/" + collarId + ".svg"))
+			}
+			if (settings.config.collars[collarId]) {
+				passives.add(new Category(data.mewgenie.collars[collarId].name[settings.config.lang], collarId, "./mewgenie-data/collarIcons/" + collarId + ".svg"))
 			}
 		}
 

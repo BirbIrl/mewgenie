@@ -1,3 +1,5 @@
+import settings from "/js/ui/settings.js";
+
 class Tab {
 	/**@param {Overlay} overlay 
 	 * @param {String} name */
@@ -27,6 +29,7 @@ class Overlay {
 		this.registerTab("about")
 		this.makeExitButton()
 		this.registerSettingsButton()
+		this.settings = settings
 		this.dom.classList.toggle("hidden", false)
 	}
 	/** @param {string} name  */

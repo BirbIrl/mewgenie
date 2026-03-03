@@ -1,4 +1,4 @@
-import settings from '/js/settings.js'
+import settings from '/js/ui/settings.js'
 /** @interface */
 export class Mewgeneric {
 
@@ -25,13 +25,13 @@ export class Mewgeneric {
 	 * @returns {String}
 	 */
 	getName() {
-		return this.get("name")[settings.lang]
+		return this.get("name")[settings.config.lang]
 	}
 	/**
 	 * @returns {String}
 	 */
 	getDescription() {
-		return this.get("desc")[settings.lang]
+		return this.get("desc")[settings.config.lang]
 	}
 
 	async makeMainElement() { }
