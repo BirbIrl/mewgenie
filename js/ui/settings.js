@@ -1,3 +1,4 @@
+import overlay from "/js/ui/overlay.js"
 import data from "/js/data.js"
 
 /** @param {any} obj1 
@@ -42,6 +43,7 @@ class Settings {
 		this.config = structuredClone(this.defaultConfig)
 		this.load()
 		this.cache = structuredClone(this.config)
+
 		this.registerElements()
 		for (const collarName in this.config.collars) {
 			if (this.config.collars[collarName]) {
@@ -120,12 +122,19 @@ class Settings {
 
 	save() {
 		window.localStorage.setItem("config", JSON.stringify(this.cache))
+		window.localStorage.setItem("unchangedConfig", "false")
 	}
 	load() {
 		const storage = window.localStorage
 		const config = storage.getItem("config")
-		if (config) {
+		if (typeof config == "string") {
 			recursivelyApply(this.config, JSON.parse(config))
+		}
+		console.log(storage.getItem("unchangedConfig"))
+		if (storage.getItem("unchangedConfig") != "true") {
+			console.log("Hit!")
+			storage.setItem("unchangedConfig", "true")
+			overlay.toggle(false)
 		}
 	}
 	reset() {
