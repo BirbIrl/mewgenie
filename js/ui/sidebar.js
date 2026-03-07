@@ -125,6 +125,7 @@ export class Sidebar {
 		const name = mewgeneric.getName()
 		const collar = mewgeneric.get("class")
 
+
 		if (name && collar) {
 			const element = this.dom.getElementsByClassName("sidebar-element")[0]
 			element.innerHTML = ""

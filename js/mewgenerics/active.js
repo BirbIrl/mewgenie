@@ -9,13 +9,13 @@ export class Active extends Mewgeneric {
 		super(skillId);
 		this.tier = tier ?? 1;
 		this.data = data.abilities[this.id];
-		this.upgradeData = data.abilities[this.id + 2]
 
-		if (this.upgradeData) {
-			this.maxTier = 2
-		} else {
-			this.maxTier = 1
+		this.maxTier = 1
+		while (data.abilities[this.id + (this.maxTier + 1)]) {
+			this.maxTier++
 		}
+
+		this.tier = Math.min(this.tier, this.maxTier)
 
 	}
 
@@ -23,13 +23,32 @@ export class Active extends Mewgeneric {
 	 * @param {number} [tier]
 	 * @returns {any} */
 	get(key, tier) {
+		//todo refactor this and do all this in the lua parser because this is terrible
 		tier = tier ?? this.tier
-		if (tier == 1) {
-			return this.data?.meta?.[key] ?? this.data[key]
-		} else if (tier == 2) {
-			return this.upgradeData?.meta?.[key] ?? this.upgradeData[key]
+		let result
+		if (tier > 1 && tier <= this.maxTier) {
+			result = (new Active(this.id + tier)).get(key)
 		}
-		throw Error("Actives don't support tier: " + tier)
+		if (tier == 1) {
+			result = this.data?.meta?.[key] ?? this.data?.[key]
+		}
+
+		if (result) {
+			return result
+		}
+		if (key == "variant_of" || key == "template") {
+			return
+		}
+		const variantId = this.get("variant_of")
+		if (variantId) {
+			return (new Active(variantId)).get(key)
+		}
+
+		const templateId = this.get("template")
+		if (templateId) {
+			return (new Active(templateId)).get(key)
+		}
+
 	}
 
 	getIcon() {
