@@ -32,8 +32,8 @@ async function sortByLangName(object) {
 
 async function init() {
 	await data.loadPassives();
-	await table.init()
 
+	await table.groups.passives.init()
 	for (const passiveName of await sortByLangName(data.passives)) {
 		if (data.mewgenie.blacklist.passives.includes(passiveName)) {
 			continue
@@ -44,6 +44,7 @@ async function init() {
 			group.add(passive)
 		}
 	}
+
 	table.showGroup(table.groups.passives)
 
 }

@@ -24,38 +24,44 @@ class Group {
 
 	registerButton() {
 		const btn = document.createElement("div")
-		btn.className = "header-button"
+		this.btn = btn
+		btn.className = "header-button hidden"
 		btn.textContent = String(this.name).charAt(0).toUpperCase() + String(this.name).slice(1);
 		btn.addEventListener("click", () => { this.table.showGroup(this) })
 		document.getElementById("header-buttons").appendChild(btn)
 	}
 
+	showButton() {
+		this.btn.classList.toggle("hidden", false)
+	}
+
 
 }
 
+class Passives extends Group {
+	/** @param {Table} table  */
+	constructor(table) {
+		super("passive", table)
+	}
+	async init() {
+		for (const collarId of data.mewgenie.collarOrder) {
+			if (collarId == "Disorder" && settings.config.showDisorders) {
+				this.add(new Category("Disorders", collarId))
+			}
+			if (settings.config.collars[collarId]) {
+				this.add(new Category(data.mewgenie.collars[collarId].name[settings.config.lang], collarId, "./mewgenie-data/collarIcons/" + collarId + ".svg"))
+			}
+		}
+		this.showButton()
+	}
+}
 class Table {
 	constructor() {
 		this.dom = document.getElementById("table")
-		/** @type {Object<string,Group>}*/
 		this.groups = {
-			"passives": new Group("passives", this),
-			"actives": new Group("actives", this),
-			"items": new Group("items", this),
+			"passives": new Passives(this),
 		}
 		this.activeGroup = this.groups.passives
-	}
-
-	async init() {
-		const passives = this.groups.passives
-		for (const collarId of data.mewgenie.collarOrder) {
-			if (collarId == "Disorder" && settings.config.showDisorders) {
-				passives.add(new Category("Disorders", collarId))
-			}
-			if (settings.config.collars[collarId]) {
-				passives.add(new Category(data.mewgenie.collars[collarId].name[settings.config.lang], collarId, "./mewgenie-data/collarIcons/" + collarId + ".svg"))
-			}
-		}
-
 	}
 
 	/** @param {Group} [group]*/
