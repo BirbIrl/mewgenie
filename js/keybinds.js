@@ -68,9 +68,10 @@ async function keybindUpHandler(event) {
 	}
 }
 
-export async function init() {
+async function init() {
 	document.addEventListener('keydown', keybindHandler);
 	document.addEventListener('keyup', keybindUpHandler);
 
 }
-export default init;
+
+init()
