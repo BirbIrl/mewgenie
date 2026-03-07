@@ -44,6 +44,7 @@ async function init() {
 			group.add(passive)
 		}
 	}
+	table.showGroup(table.groups.passives)
 
 }
 

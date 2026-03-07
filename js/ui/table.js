@@ -3,13 +3,17 @@ import settings from '/js/ui/settings.js'
 import data from '/js/data.js'
 
 class Group {
-	/** @param {string} name */
-	constructor(name) {
+	/** @param {string} name
+	 *	@param {Table} table 
+	 * */
+	constructor(name, table) {
 		this.name = name
+		this.table = table
 		/** @type {Object<string,Category>}*/
 		this.byId = {}
 		/** @type {Category[]}*/
 		this.byOrder = []
+		this.registerButton()
 	}
 
 	/** @param {Category} category */
@@ -18,6 +22,15 @@ class Group {
 		this.byOrder.push(category)
 	}
 
+	registerButton() {
+		const btn = document.createElement("div")
+		btn.className = "header-button"
+		btn.textContent = String(this.name).charAt(0).toUpperCase() + String(this.name).slice(1);
+		btn.addEventListener("click", () => { this.table.showGroup(this) })
+		document.getElementById("header-buttons").appendChild(btn)
+	}
+
+
 }
 
 class Table {
@@ -25,13 +38,15 @@ class Table {
 		this.dom = document.getElementById("table")
 		/** @type {Object<string,Group>}*/
 		this.groups = {
-			"passives": new Group("passives")
+			"passives": new Group("passives", this),
+			"actives": new Group("actives", this),
+			"items": new Group("items", this),
 		}
 		this.activeGroup = this.groups.passives
 	}
 
 	async init() {
-		const passives = this.groups["passives"]
+		const passives = this.groups.passives
 		for (const collarId of data.mewgenie.collarOrder) {
 			if (collarId == "Disorder" && settings.config.showDisorders) {
 				passives.add(new Category("Disorders", collarId))
@@ -41,14 +56,15 @@ class Table {
 			}
 		}
 
-		this.showGroup(passives)
 	}
 
-	/** @param {Group} group*/
+	/** @param {Group} [group]*/
 	async showGroup(group) {
 		this.dom.textContent = "";
-		for (const category of group.byOrder) {
-			this.dom.appendChild(category.dom)
+		if (group) {
+			for (const category of group.byOrder) {
+				this.dom.appendChild(category.dom)
+			}
 		}
 	}
 }

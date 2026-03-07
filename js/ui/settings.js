@@ -130,9 +130,7 @@ class Settings {
 		if (typeof config == "string") {
 			recursivelyApply(this.config, JSON.parse(config))
 		}
-		console.log(storage.getItem("unchangedConfig"))
 		if (storage.getItem("unchangedConfig") != "true") {
-			console.log("Hit!")
 			storage.setItem("unchangedConfig", "true")
 			overlay.toggle(false)
 		}

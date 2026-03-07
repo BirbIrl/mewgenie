@@ -38,7 +38,6 @@ class Category {
 	 * @param {string} [iconPath]
 	 */
 	constructor(name, id, iconPath) {
-		this.table = document.getElementById("table")
 		this.name = name
 		this.id = id
 		this.hidden = false
@@ -80,7 +79,6 @@ class Category {
 		contents.classList.add("table-category-contents", "hidden")
 		category.appendChild(contents)
 
-		this.table.appendChild(category)
 	}
 	/** @param {Mewgeneric} mewgeneric */
 	async add(mewgeneric) {

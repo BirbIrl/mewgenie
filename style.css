@@ -64,6 +64,29 @@ header {
 	opacity: 50%
 }
 
+.header-buttons {
+	flex-direction: row;
+	display: flex;
+}
+
+.header-button {
+	user-select: none;
+	cursor: pointer;
+	padding: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+	border-radius: 10px;
+	font-size: 1.2em;
+	background-color: #FFF2;
+	transition: .2s;
+}
+
+
+
+.header-button:hover {
+	background-color: #FFF3;
+}
+
 input {
 	font-family: tikaAdjusted;
 	background-color: #00000055;
