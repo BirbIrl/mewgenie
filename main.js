@@ -10,7 +10,7 @@ import table from "./js/ui/table.js"
 // load groups
 import passives from './js/groups/passives.js'
 import actives from './js/groups/actives.js'
-import items from './js/groups/items.js'
+
 
 // enable keybinds
 import './js/keybinds.js'

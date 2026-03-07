@@ -133,7 +133,6 @@ export class Sidebar {
 
 
 			const thumbnail = document.createElement("div")
-			thumbnail.className = "sidebar-element-thumbnail-passive"
 			thumbnail.appendChild(mewgeneric.makeThumbnail(2.5));
 			element.appendChild(thumbnail)
 

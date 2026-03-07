@@ -43,32 +43,33 @@ export class Passive extends Mewgeneric {
 			const crown = document.createElement("img");
 			crown.style.transform = "translate(-50%, -50%) scale(" + scale + ")";
 			crown.src = "./mewgenie-data/shells/shellPassiveUpgradeCrown" + collar + ".svg"
-			crown.className = "thumbnail-passive";
+			crown.className = "thumbnail";
 			thumbnail.appendChild(crown);
 		}
 
 		const ability = document.createElement("img");
 		ability.style.transform = "translate(-50%, -40%) scale(" + scale + ")";
 		ability.src = "mewgenie-data/passiveIcons/" + this.getIcon() + ".svg"
-		ability.className = "thumbnail-passive";
+		ability.className = "thumbnail";
 		thumbnail.appendChild(ability);
 
 		const shell = document.createElement("img");
 		shell.style.transform = "translate(-50%, -50%) scale(" + scale + ")";
 		shell.src = "mewgenie-data/shells/shellPassive" + collar + ".svg";
-		shell.className = "thumbnail-passive";
+		shell.className = "thumbnail";
 		thumbnail.appendChild(shell);
 
 		if (this.tier > 1 && collar != "Disorder") {
 			const pip = document.createElement("img");
 			pip.style.transform = "translate(-50%, -50%) scale(" + scale + ")";
 			pip.src = "./mewgenie-data/shells/shellPassiveUpgradePip.svg"
-			pip.className = "thumbnail-passive";
+			pip.className = "thumbnail";
 			thumbnail.appendChild(pip);
 		}
 
 		const container = document.createElement("div")
-		container.className = "table-element-thumbnail-passive"
+		container.style.height = 80 * scale + "px"
+		container.style.position = "relative"
 		container.appendChild(thumbnail);
 		return container
 

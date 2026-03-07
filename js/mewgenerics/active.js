@@ -96,8 +96,14 @@ export class Active extends Mewgeneric {
 		const ability = document.createElement("img");
 		ability.style.transform = "translate(-50%, -40%) scale(" + scale + ")";
 		ability.src = "mewgenie-data/abilityIcons/" + this.getIcon() + ".svg"
+		ability.className = "thumbnail";
+		thumbnail.append(ability)
 
-		return thumbnail
+		const container = document.createElement("div")
+		container.style.height = 80 * scale + "px"
+		container.style.position = "relative"
+		container.appendChild(thumbnail);
+		return container
 
 
 	}

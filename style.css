@@ -111,12 +111,6 @@ input {
 .sidebar-element {}
 */
 
-.sidebar-element-thumbnail-passive {
-	position: relative;
-	height: 200px;
-	filter: drop-shadow(7px 7px 2px #00000088)
-}
-
 
 
 .sidebar-element-name {
@@ -252,24 +246,20 @@ input {
 
 
 
-.table-element-thumbnail-passive {
+.table-element-thumbnail {
 	user-select: none;
-
 	cursor: pointer;
-	height: 120px;
-	width: 200px;
 	filter: drop-shadow(7px 7px 2px #00000088);
 	transition: transform .2s;
-	rotate: 90;
 }
 
-.table-element-thumbnail-passive:hover {
+.table-element-thumbnail:hover {
 	transform: scale(1.1);
 }
 
-.thumbnail-passive {
+.thumbnail {
 	position: absolute;
-	top: 45%;
+	top: 50%;
 	left: 50%;
 }
 
