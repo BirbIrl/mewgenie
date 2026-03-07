@@ -10,6 +10,11 @@ class Data {
 		this.passives = await passivesResponse.json();
 	}
 
+	async loadAbilities() {
+		const abilitiesResponse = await fetch("../mewgenie-data/abilities.json");
+		this.abilities = await abilitiesResponse.json();
+	}
+
 }
 
 const data = new Data()

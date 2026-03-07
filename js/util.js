@@ -1,18 +1,25 @@
+import Active from "/js/mewgenerics/active.js"
 import data from "/js/data.js"
 import settings from "/js/ui/settings.js"
 
-export function sortByLangName(object) {
-	const langToId = {}
+export function sortByLangName(object, mewgenericType, blacklist) {
+	const langToMewGeneric = {}
 	for (const id in object) {
-		if (data.mewgenie.blacklist.passives.includes(id)) {
+		if (blacklist && blacklist.includes(id)) {
 			continue
 		}
-		langToId[data.passives[id].name[settings.config.lang]] = id
+		if (mewgenericType == Active && id.charAt(id.length - 1) == "2") {
+			continue
+		}
+		const mewgeneric = new mewgenericType(id)
+		const name = mewgeneric.getName()
+		if (name && mewgeneric.get("class") && mewgeneric.getDescription())
+			langToMewGeneric[name] = mewgeneric
 	}
 
 	const sorted = []
-	for (const id of Object.keys(langToId).sort()) {
-		sorted.push(langToId[id])
+	for (const mewgeneric of Object.keys(langToMewGeneric).sort()) {
+		sorted.push(langToMewGeneric[mewgeneric])
 	}
 	return sorted
 }

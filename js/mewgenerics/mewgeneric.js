@@ -25,13 +25,13 @@ export class Mewgeneric {
 	 * @returns {String}
 	 */
 	getName() {
-		return this.get("name")[settings.config.lang]
+		return this.get("name")?.[settings.config.lang]
 	}
 	/**
 	 * @returns {String}
 	 */
 	getDescription() {
-		return this.get("desc")[settings.config.lang]
+		return this.get("desc")?.[settings.config.lang]
 	}
 
 	async makeMainElement() { }

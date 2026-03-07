@@ -1,5 +1,6 @@
 //Known issues:
 //- mewgenie-unboxer should output the stat icons in a fixed size
+//icons in sidebar are broken
 import data from './js/data.js'
 import table from "./js/ui/table.js"
 
@@ -19,7 +20,9 @@ async function init() {
 
 	table.showGroup(passives)
 
+	await data.loadAbilities();
 	actives.init()
+
 	items.init()
 
 }

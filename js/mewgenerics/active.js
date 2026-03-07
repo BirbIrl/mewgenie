@@ -2,17 +2,19 @@ import Mewgeneric from '/js/mewgenerics/mewgeneric.js'
 import data from '/js/data.js'
 
 /* Todo: instead of using get every time just load the entire class except for numbered keys and then overwrite them with the tier selected*/
-export class Passive extends Mewgeneric {
+export class Active extends Mewgeneric {
 	/** @param {string} skillId
 	* @param {number} [tier] */
 	constructor(skillId, tier) {
 		super(skillId);
-		this.data = data.passives[this.id];
 		this.tier = tier ?? 1;
+		this.data = data.abilities[this.id];
+		this.upgradeData = data.abilities[this.id + 2]
 
-		this.maxTier = 1
-		while (this.data[this.maxTier + 1]) {
-			this.maxTier++
+		if (this.upgradeData) {
+			this.maxTier = 2
+		} else {
+			this.maxTier = 1
 		}
 
 	}
@@ -22,23 +24,25 @@ export class Passive extends Mewgeneric {
 	 * @returns {any} */
 	get(key, tier) {
 		tier = tier ?? this.tier
-		var value;
-		for (let i = tier; i > 0; i--) {
-			if (this.data[i]) {
-				value = this.data[i][key]
-				if (value)
-					return value
-			}
+		if (tier == 1) {
+			return this.data?.meta?.[key] ?? this.data[key]
+		} else if (tier == 2) {
+			return this.upgradeData?.meta?.[key] ?? this.upgradeData[key]
 		}
-		return this.data[key]
+		throw Error("Actives don't support tier: " + tier)
+	}
+
+	getIcon() {
+		return this.get("ability_icon") || this.id
 	}
 	/** @param {number} scale 
 	 * @returns {HTMLElement}
 	*/
 	makeThumbnail(scale) {
+		/* 
 		const collar = this.get("class")
 		const thumbnail = document.createElement("div");
-
+		
 		if (this.tier > 1 && collar != "Disorder") {
 			const crown = document.createElement("img");
 			crown.style.transform = "translate(-50%, -50%) scale(" + scale + ")";
@@ -66,11 +70,15 @@ export class Passive extends Mewgeneric {
 			pip.className = "thumbnail-passive";
 			thumbnail.appendChild(pip);
 		}
+		*/
 
-		const container = document.createElement("div")
-		container.className = "table-element-thumbnail-passive"
-		container.appendChild(thumbnail);
-		return container
+		const thumbnail = document.createElement("div");
+
+		const ability = document.createElement("img");
+		ability.style.transform = "translate(-50%, -40%) scale(" + scale + ")";
+		ability.src = "mewgenie-data/abilityIcons/" + this.getIcon() + ".svg"
+
+		return thumbnail
 
 
 	}
@@ -78,4 +86,4 @@ export class Passive extends Mewgeneric {
 
 
 
-export default Passive
+export default Active

@@ -9,10 +9,7 @@ class Element {
 		const name = mewgeneric.getName()
 		const element = document.createElement("div");
 		element.className = "table-element";
-		const thumbnail = document.createElement("div")
-		thumbnail.className = "table-element-thumbnail-passive"
-		thumbnail.appendChild(mewgeneric.makeThumbnail(1.5));
-		element.appendChild(thumbnail)
+		element.appendChild(mewgeneric.makeThumbnail(1.5))
 		element.appendChild(document.createTextNode(name));
 		this.showOnSidebar = () => {
 			//@ts-ignore

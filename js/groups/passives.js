@@ -21,11 +21,7 @@ class Passives extends Group {
 			}
 		}
 
-		for (const passiveName of sortByLangName(data.passives)) {
-			if (data.mewgenie.blacklist.passives.includes(passiveName)) {
-				continue
-			}
-			const passive = new Passive(passiveName, 1)
+		for (const passive of sortByLangName(data.passives, Passive, data.mewgenie.blacklist.passives)) {
 			const category = this.byId[passive.get("class")]
 			if (category) {
 				category.add(passive)
